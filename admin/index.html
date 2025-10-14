@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Admin Panel - RoomRental</title>
         <script src="https://cdn.tailwindcss.com"></script>
-        <link rel="stylesheet" href="../assets/css/styles.css">
+        <link rel="stylesheet" href="/assets/css/styles.css">
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
         <script>
@@ -35,11 +35,11 @@
                             <i class="fas fa-cogs mr-2"></i>Admin Panel
                         </h1>
                         <div class="hidden md:flex space-x-4">
-                            <a href="../public/index.html"
+                            <a href="public/index.html"
                                 class="text-gray-600 hover:text-blue-600 flex items-center">
                                 <i class="fas fa-home mr-1"></i> Public Site
                             </a>
-                            <a href="../owner/dashboard.html"
+                            <a href="owner/index.html"
                                 class="text-gray-600 hover:text-blue-600 flex items-center">
                                 <i class="fas fa-user mr-1"></i> Owner Portal
                             </a>
@@ -525,8 +525,8 @@
             </div>
         </div>
 
-        <script src="../assets/js/auth.js"></script>
-        <script src="../assets/js/admin.js"></script>
+        <script src="/assets/js/auth.js"></script>
+        <script src="/assets/js/admin.js"></script>
         <script>
         // Enhanced admin functionality
         let allUsers = [];
@@ -540,7 +540,7 @@
         async function initializeAdminPanel() {
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             if (user.role !== 'admin') {
-                window.location.href = '../owner/login.html';
+                window.location.href = 'owner/login.html';
                 return;
             }
 
@@ -947,12 +947,12 @@ async function deleteProperty(propertyId) {
 
 function viewProperty(propertyId) {
     // Redirect to property view page or show in modal
-    window.open(`../public/property-details.html?id=${propertyId}`, '_blank');
+    window.open(`public/property-details.html?id=${propertyId}`, '_blank');
 }
 
 function editProperty(propertyId) {
     // Redirect to property edit page
-    window.location.href = `../owner/edit-property.html?id=${propertyId}`;
+    window.location.href = `owner/edit-property.html?id=${propertyId}`;
 }
 
 // Utility functions for loading states

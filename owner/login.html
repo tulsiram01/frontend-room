@@ -14,7 +14,7 @@
         <div class="text-center">
             <h2 class="text-3xl font-bold text-gray-900">Owner Login</h2>
             <p class="mt-2 text-gray-600">Sign in to your account</p>
-            <a href="/public/index.html" class="text-blue-600 hover:text-blue-500 text-sm">
+            <a href="public/index.html" class="text-blue-600 hover:text-blue-500 text-sm">
                 ← Back to homepage
             </a>
         </div>
@@ -83,9 +83,9 @@
         if (localStorage.getItem('token')) {
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             if (user.role === 'admin') {
-                window.location.href = '../admin/admin-panel.html';
+                window.location.href = '/admin/index.html';
             } else {
-                window.location.href = 'dashboard.html';
+                window.location.href = 'index.html';
             }
         }
 
@@ -122,9 +122,9 @@
                     // Redirect based on role
                     setTimeout(() => {
                         if (data.data.user.role === 'admin') {
-                            window.location.href = '../admin/admin-panel.html';
+                            window.location.href = '/admin/index.html';
                         } else {
-                            window.location.href = 'dashboard.html';
+                            window.location.href = 'index.html';
                         }
                     }, 1000);
                 } else {
