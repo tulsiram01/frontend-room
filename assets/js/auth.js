@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://backend-room-e8i5.onrender.com';
 
 // Session timeout (24 hours)
 const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;

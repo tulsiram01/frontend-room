@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://backend-room-e8i5.onrender.com/api';
 
 // Load properties when page loads
 document.addEventListener('DOMContentLoaded', function() {
@@ -51,7 +51,7 @@ function displayProperties(properties) {
     grid.innerHTML = properties.map(property => `
         <div class="property-card bg-white rounded-lg shadow-md overflow-hidden">
             ${property.images && property.images.length > 0 ? 
-                `<img src="http://localhost:5000/${property.images[0].path}" alt="${property.title}" class="w-full h-48 object-cover">` :
+                `<img src="https://backend-room-e8i5.onrender.com/${property.images[0].path}" alt="${property.title}" class="w-full h-48 object-cover">` :
                 `<div class="w-full h-48 bg-gray-200 flex items-center justify-center">
                     <i class="fas fa-home text-gray-400 text-4xl"></i>
                 </div>`
