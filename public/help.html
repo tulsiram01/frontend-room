@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help Center - RoomRental</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .mobile-menu { transform: translateX(100%); transition: transform 0.3s ease-in-out; }
+        .mobile-menu.active { transform: translateX(0); }
+        .overlay { opacity: 0; visibility: hidden; transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out; }
+        .overlay.active { opacity: 1; visibility: visible; }
+        .faq-item { border-bottom: 1px solid #e5e7eb; }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+        .faq-item.active .faq-answer { max-height: 500px; }
+        .faq-item.active .faq-toggle i { transform: rotate(180deg); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-xl font-bold text-blue-600">RoomRental</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-600 hover:text-blue-600 transition">Home</a>
+                    <a href="../owner/login.html" class="text-gray-600 hover:text-blue-600 transition">Sign In</a>
+                    <a href="../owner/register.html" class="text-gray-600 hover:text-blue-600 transition">Sign Up</a>
+                    <a href="support.html" class="text-gray-600 hover:text-blue-600 transition">Support</a>
+                    <a href="help.html" class="text-blue-600 font-semibold">Help Center</a>
+                    <a href="../owner/dashboard.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Owner Dashboard</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuButton" class="text-gray-600 hover:text-blue-600 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu fixed inset-y-0 right-0 z-50 w-64 bg-white shadow-lg">
+        <div class="flex flex-col h-full">
+            <div class="flex justify-between items-center p-4 border-b">
+                <h2 class="text-lg font-semibold">Menu</h2>
+                <button id="closeMobileMenu" class="text-gray-600 hover:text-blue-600">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="flex-1 p-4">
+                <ul class="space-y-4">
+                    <li><a href="index.html" class="flex items-center text-gray-600 hover:text-blue-600 py-2"><i class="fas fa-home mr-3"></i> Home</a></li>
+                    <li><a href="../owner/login.html" class="flex items-center text-gray-600 hover:text-blue-600 py-2"><i class="fas fa-building mr-3"></i> Sign In</a></li>
+                    <li><a href="../owner/register.html" class="flex items-center text-gray-600 hover:text-blue-600 py-2"><i class="fas fa-building mr-3"></i> Sign Up</a></li>
+                    <li><a href="support.html" class="flex items-center text-gray-600 hover:text-blue-600 py-2"><i class="fas fa-headset mr-3"></i> Support</a></li>
+                    <li><a href="help.html" class="flex items-center text-blue-600 py-2"><i class="fas fa-question-circle mr-3"></i> Help Center</a></li>
+                    <li><a href="../owner/dashboard.html" class="flex items-center text-gray-600 hover:text-blue-600 py-2"><i class="fas fa-tachometer-alt mr-3"></i> Owner Dashboard</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="overlay" class="overlay fixed inset-0 bg-black bg-opacity-50 z-40"></div>
+
+    <!-- Help Center Content -->
+    <div class="max-w-4xl mx-auto px-4 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">Help Center</h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">Find answers to common questions and learn how to use RoomRental.</p>
+            
+            <div class="mt-8 max-w-2xl mx-auto">
+                <div class="relative">
+                    <input type="text" placeholder="Search for help..." class="w-full px-6 py-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-blue-600">
+                        <i class="fas fa-search text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+                <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-user text-blue-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">For Renters</h3>
+                <p class="text-gray-600 mb-4">Find information about searching for properties, booking, and payments.</p>
+                <a href="#" class="text-blue-600 font-semibold hover:underline">Browse Articles →</a>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition">
+                <div class="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                    <i class="fas fa-home text-blue-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">For Owners</h3>
+                <p class="text-gray-600 mb-4">Learn how to list your property, manage bookings, and get paid.</p>
+                <a href="#" class="text-blue-600 font-semibold hover:underline">Browse Articles →</a>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="border-b border-gray-200">
+                <div class="px-6 py-4 bg-gray-50">
+                    <h2 class="text-2xl font-bold">Frequently Asked Questions</h2>
+                </div>
+            </div>
+            
+            <div class="divide-y divide-gray-200">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition">
+                        <span class="text-lg font-medium">How do I search for properties?</span>
+                        <span class="faq-icon transform transition">
+                            <i class="fas fa-chevron-down text-gray-400"></i>
+                        </span>
+                    </button>
+                    <div class="faq-answer px-6 pb-6">
+                        <p class="text-gray-600">To search for properties, go to the Properties page and use the search filters. You can filter by location, price range, number of bedrooms, and more. You can also use the map view to see properties in specific areas.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="faq-item">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition">
+                        <span class="text-lg font-medium">How do I list my property?</span>
+                        <span class="faq-icon transform transition">
+                            <i class="fas fa-chevron-down text-gray-400"></i>
+                        </span>
+                    </button>
+                    <div class="faq-answer px-6 pb-6">
+                        <p class="text-gray-600">To list your property, sign up for an owner account and go to your dashboard. Click on "Add New Property" and fill out the form with details about your property, including photos, description, and rental terms. Once submitted, our team will review your listing before it goes live.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="faq-item">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition">
+                        <span class="text-lg font-medium">What payment methods are accepted?</span>
+                        <span class="faq-icon transform transition">
+                            <i class="fas fa-chevron-down text-gray-400"></i>
+                        </span>
+                    </button>
+                    <div class="faq-answer px-6 pb-6">
+                        <p class="text-gray-600">We accept various payment methods including credit cards (Visa, MasterCard, American Express), debit cards, and bank transfers. All payments are processed securely through our encrypted payment system.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="faq-item">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left hover:bg-gray-50 transition">
+                        <span class="text-lg font-medium">How can I contact a property owner?</span>
+                        <span class="faq-icon transform transition">
+                            <i class="fas fa-chevron-down text-gray-400"></i>
+                        </span>
+                    </button>
+                    <div class="faq-answer px-6 pb-6">
+                        <p class="text-gray-600">Once you've found a property you're interested in, you can contact the owner directly through our messaging system. Click on the "Contact Owner" button on the property details page to send a message. The owner will receive a notification and can respond to your inquiry.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center">
+            <p class="text-gray-600 mb-4">Still need help? We're here for you.</p>
+            <a href="support.html" class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition">Contact Support</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">RoomRental</h3>
+                    <p class="text-gray-400">Finding your perfect rental home made simple and secure.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="properties.html" class="text-gray-400 hover:text-white transition">Properties</a></li>
+                        <li><a href="dashboard.html" class="text-gray-400 hover:text-white transition">Owner Dashboard</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="support.html" class="text-gray-400 hover:text-white transition">Contact Support</a></li>
+                        <li><a href="help.html" class="text-white font-medium">Help Center</a></li>
+                        <li><a href="faq.html" class="text-gray-400 hover:text-white transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="privacy.html" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="terms.html" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 RoomRental. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const closeMobileMenu = document.getElementById('closeMobileMenu');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const overlay = document.getElementById('overlay');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.add('active');
+                overlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            function closeMenu() {
+                mobileMenu.classList.remove('active');
+                overlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            
+            closeMobileMenu.addEventListener('click', closeMenu);
+            overlay.addEventListener('click', closeMenu);
+            
+            // FAQ toggle functionality
+            const faqToggles = document.querySelectorAll('.faq-toggle');
+            faqToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const faqItem = this.parentElement;
+                    faqItem.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

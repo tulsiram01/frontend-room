@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>About Us - RoomRental</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+        <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .profile-card {
+            transition: all 0.3s ease;
+        }
+        .profile-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        .social-icon {
+            transition: all 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: scale(1.1);
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #3b82f6;
+        }
+        
+        /* Mobile Menu Styles - Half Left Position */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -50%; /* Start off-screen to the right */
+            width: 50%; /* Cover only half the screen */
+            height: 100vh;
+            background: white;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease-in-out;
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .mobile-menu.active {
+            right: 0; /* Slide in to the right edge */
+        }
+        
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+            z-index: 999;
+        }
+        
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #4b5563;
+            cursor: pointer;
+        }
+        
+        .mobile-menu-links {
+            margin-top: 60px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .mobile-menu-links a {
+            padding: 12px 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #374151;
+            border-bottom: 1px solid #f3f4f6;
+            transition: color 0.2s;
+        }
+        
+        .mobile-menu-links a:hover {
+            color: #3b82f6;
+        }
+        
+        .mobile-menu-auth {
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        /* Menu Toggle Animation */
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 24px;
+            height: 18px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+        }
+        
+        .menu-toggle span {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: #4b5563;
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        .menu-toggle.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+    </style>
+    </head>
+    <body class="bg-gray-50">
+        <!-- Navigation -->
+        <nav class="bg-white shadow-lg sticky top-0 z-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <!-- Logo -->
+                    <div class="flex items-center">
+                        <a href="index.html" class="flex items-center">
+                            <div
+                                class="bg-blue-600 text-white p-2 rounded-lg mr-3">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <span
+                                class="text-xl font-bold text-gray-900">RoomRental</span>
+                        </a>
+                    </div>
+
+                    <!-- Desktop Menu -->
+                    <div
+                        class="desktop-menu hidden md:flex items-center space-x-8">
+                        <a href="index.html"
+                            class="text-gray-600 hover:text-blue-600 transition">Home</a>
+                        <a href="../owner/login.html"
+                            class="text-gray-600 hover:text-blue-600 transition">Sign
+                            In</a>
+                        <a href="../owner/register.html"
+                            class="text-gray-600 hover:text-blue-600 transition">Sign
+                            Up</a>
+                        <a href="support.html"
+                            class="text-gray-600 hover:text-blue-600 transition">Support</a>
+                        <a href="help.html"
+                            class="text-blue-600 font-semibold">Help Center</a>
+                        <a href="../owner/dashboard.html"
+                            class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Owner
+                            Dashboard</a>
+                    </div>
+                    <!-- Mobile Menu Button -->
+                    <button class="menu-toggle md:hidden" id="mobileMenuToggle">
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <button class="mobile-menu-close" id="mobileMenuClose">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="mobile-menu-links">
+                <a href="index.html" class="text-gray-600 hover:text-blue-600 transition">Home</a>
+                    <a href="../owner/register.html" class="text-gray-600 hover:text-blue-600 transition">Sign In</a>
+                    <a href="../owner/login.html" class="text-gray-600 hover:text-blue-600 transition">Sign Up</a>
+                    <a href="support.html" class="text-gray-600 hover:text-blue-600 transition">Support</a>
+                    <a href="help.html" class="text-blue-600 font-semibold">Help Center</a>
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <section class="hero-gradient text-white py-20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl lg:text-6xl font-bold mb-6">About
+                    RoomRental</h1>
+                <p
+                    class="text-xl lg:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
+                    Transforming the way people find and rent rooms through
+                    technology, innovation, and a passion for creating better
+                    living experiences.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#team"
+                        class="bg-yellow-400 text-gray-900 px-8 py-4 rounded-lg font-bold hover:bg-yellow-300 transition duration-300">
+                        Meet Our Team
+                    </a>
+                    <a href="#contact"
+                        class="border-2 border-white text-white px-8 py-4 rounded-lg font-bold hover:bg-white hover:text-blue-600 transition duration-300">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission Section -->
+        <section id="mission" class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div
+                    class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2
+                            class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">Our
+                            Mission</h2>
+                        <p class="text-lg text-gray-600 mb-6">
+                            At RoomRental, we believe that finding the perfect
+                            room should be simple, transparent, and stress-free.
+                            Our mission is to revolutionize the rental industry
+                            by connecting property owners with potential tenants
+                            through an intuitive platform that prioritizes user
+                            experience and trust.
+                        </p>
+                        <p class="text-lg text-gray-600 mb-8">
+                            We're committed to creating a community where
+                            everyone can find their ideal living space,
+                            whether you're a student, professional, or family
+                            looking for your next home.
+                        </p>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="flex items-center">
+                                <div class="bg-green-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-check text-green-600"></i>
+                                </div>
+                                <span
+                                    class="font-semibold text-gray-900">Verified
+                                    Listings</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                    <i
+                                        class="fas fa-shield-alt text-blue-600"></i>
+                                </div>
+                                <span class="font-semibold text-gray-900">Secure
+                                    Platform</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div
+                                    class="bg-purple-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-users text-purple-600"></i>
+                                </div>
+                                <span
+                                    class="font-semibold text-gray-900">Community
+                                    Focus</span>
+                            </div>
+                            <div class="flex items-center">
+                                <div
+                                    class="bg-orange-100 p-3 rounded-full mr-4">
+                                    <i
+                                        class="fas fa-rocket text-orange-600"></i>
+                                </div>
+                                <span
+                                    class="font-semibold text-gray-900">Innovation
+                                    Driven</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <img
+                            src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.0.1&auto=format&fit=crop&w=600&q=80"
+                            alt="Our Mission"
+                            class="rounded-2xl shadow-2xl">
+                        <div
+                            class="absolute -bottom-6 -left-6 bg-yellow-400 text-gray-900 p-6 rounded-2xl shadow-lg">
+                            <div class="text-3xl font-bold">10,000+</div>
+                            <div class="text-lg">Happy Users</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section id="team" class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2
+                        class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Meet
+                        Our Founder</h2>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                        The visionary behind RoomRental - driving innovation and
+                        excellence in the rental industry
+                    </p>
+                </div>
+
+                <!-- Founder Profile -->
+                <div class="max-w-4xl mx-auto">
+                    <div
+                        class="profile-card bg-white rounded-2xl shadow-xl overflow-hidden">
+                        <div class="md:flex">
+                            <!-- Profile Image -->
+                            <div
+                                class="md:w-2/5 bg-gradient-to-br from-blue-500 to-purple-600 p-8 flex items-center justify-center">
+                                <div
+                                    class="md:w-2/5 bg-gradient-to-br from-blue-500 to-purple-600 p-8 flex items-center justify-center">
+                                    <div class="text-center text-white">
+                                        <div
+                                            class="w-48 h-48 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6 border-4 border-white/30 overflow-hidden">
+                                            <!-- Replace the icon with your image -->
+                                            <img
+                                                src="../logo/1759165368669.jpg"
+                                                alt="Profile Picture"
+                                                class="w-full h-full object-cover">
+                                        </div>
+                                        <h3 class="text-2xl font-bold mb-2">Mr.
+                                            Tulsiram Chandravanshi</h3>
+                                        <p
+                                            class="text-blue-100 text-lg">Founder,
+                                            & Developer</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Profile Details -->
+                            <div class="md:w-3/5 p-8">
+                                <div class="mb-6">
+                                    <h4
+                                        class="text-xl font-bold text-gray-900 mb-4">About
+                                        The Founder</h4>
+                                    <p class="text-gray-600 mb-4">
+                                        Mr. Tulsiram Chandravanshi is a
+                                        visionary entrepreneur and full-stack
+                                        developer
+                                        with a passion for creating innovative
+                                        solutions that solve real-world
+                                        problems.
+                                        With extensive experience in web
+                                        development and business management, he
+                                        founded
+                                        RoomRental to transform the traditional
+                                        rental market.
+                                    </p>
+                                    <p class="text-gray-600">
+                                        His technical expertise combined with
+                                        his understanding of market needs has
+                                        enabled
+                                        him to build a platform that truly
+                                        serves both property owners and tenants,
+                                        creating
+                                        a seamless and efficient rental
+                                        experience for everyone involved.
+                                    </p>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-6 mb-6">
+                                    <div>
+                                        <h5
+                                            class="font-semibold text-gray-900 mb-2">Expertise</h5>
+                                        <ul class="text-gray-600 space-y-1">
+                                            <li class="flex items-center">
+                                                <i
+                                                    class="fas fa-code text-blue-500 mr-2 text-sm"></i>
+                                                Full-Stack Development
+                                            </li>
+                                            <li class="flex items-center">
+                                                <i
+                                                    class="fas fa-chart-line text-green-500 mr-2 text-sm"></i>
+                                                Business Strategy
+                                            </li>
+                                            <li class="flex items-center">
+                                                <i
+                                                    class="fas fa-users text-purple-500 mr-2 text-sm"></i>
+                                                Team Leadership
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h5
+                                            class="font-semibold text-gray-900 mb-2">Skills</h5>
+                                        <ul class="text-gray-600 space-y-1">
+                                            <li class="flex items-center">
+                                                <i
+                                                    class="fab fa-js-square text-yellow-500 mr-2 text-sm"></i>
+                                                JavaScript & Node.js
+                                            </li>
+                                            <li class="flex items-center">
+                                                <i
+                                                    class="fas fa-database text-green-500 mr-2 text-sm"></i>
+                                                MongoDB & Databases
+                                            </li>
+                                            <li class="flex items-center">
+                                                <i
+                                                    class="fas fa-mobile-alt text-blue-500 mr-2 text-sm"></i>
+                                                Responsive Design
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Contact & Social -->
+                                <div class="border-t border-gray-200 pt-6">
+                                    <h5
+                                        class="font-semibold text-gray-900 mb-4">Connect
+                                        With Tulsiram</h5>
+                                    <div class="flex space-x-4">
+                                        <a href="#"
+                                            class="social-icon bg-blue-600 text-white p-3 rounded-full hover:bg-blue-700">
+                                            <i class="fab fa-linkedin-in"></i>
+                                        </a>
+                                        <a href="#"
+                                            class="social-icon bg-gray-800 text-white p-3 rounded-full hover:bg-gray-900">
+                                            <i class="fab fa-github"></i>
+                                        </a>
+                                        <a href="#"
+                                            class="social-icon bg-blue-400 text-white p-3 rounded-full hover:bg-blue-500">
+                                            <i class="fab fa-twitter"></i>
+                                        </a>
+                                        <a href="#"
+                                            class="social-icon bg-red-600 text-white p-3 rounded-full hover:bg-red-700">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Journey Section -->
+        <section id="story" class="py-16 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2
+                        class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Our
+                        Journey</h2>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                        From concept to reality - the story behind RoomRental's
+                        creation
+                    </p>
+                </div>
+
+                <div class="max-w-4xl mx-auto">
+                    <div class="relative">
+                        <!-- Timeline -->
+                        <div class="space-y-8">
+                            <!-- Timeline Item 1 -->
+                            <div class="timeline-item">
+                                <div
+                                    class="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+                                    <div class="flex items-center mb-4">
+                                        <div
+                                            class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-semibold">
+                                            2025
+                                        </div>
+                                        <h3
+                                            class="text-xl font-bold text-gray-900 ml-4">The
+                                            Idea Was Born</h3>
+                                    </div>
+                                    <p class="text-gray-600">
+                                        Mr. Tulsiram Chandravanshi identified
+                                        the challenges in the traditional rental
+                                        market
+                                        and envisioned a digital platform that
+                                        could simplify the process for both
+                                        property
+                                        owners and tenants.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Timeline Item 2 -->
+                            <div class="timeline-item">
+                                <div
+                                    class="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+                                    <div class="flex items-center mb-4">
+                                        <div
+                                            class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-sm font-semibold">
+                                            Early 2025
+                                        </div>
+                                        <h3
+                                            class="text-xl font-bold text-gray-900 ml-4">Development
+                                            Phase</h3>
+                                    </div>
+                                    <p class="text-gray-600">
+                                        Single-handedly developed the entire
+                                        RoomRental platform using modern
+                                        technologies
+                                        including Node.js, MongoDB, and
+                                        responsive frontend design, ensuring a
+                                        seamless user experience.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Timeline Item 3 -->
+                            <div class="timeline-item">
+                                <div
+                                    class="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+                                    <div class="flex items-center mb-4">
+                                        <div
+                                            class="bg-purple-100 text-purple-600 px-3 py-1 rounded-full text-sm font-semibold">
+                                            Mid 2025
+                                        </div>
+                                        <h3
+                                            class="text-xl font-bold text-gray-900 ml-4">Platform
+                                            Launch</h3>
+                                    </div>
+                                    <p class="text-gray-600">
+                                        Successfully launched RoomRental with a
+                                        complete suite of features including
+                                        property management, user
+                                        authentication, admin controls, and
+                                        real-time filtering.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Timeline Item 4 -->
+                            <div class="timeline-item">
+                                <div
+                                    class="bg-gray-50 p-6 rounded-2xl border border-gray-200">
+                                    <div class="flex items-center mb-4">
+                                        <div
+                                            class="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-sm font-semibold">
+                                            Present
+                                        </div>
+                                        <h3
+                                            class="text-xl font-bold text-gray-900 ml-4">Growing
+                                            Community</h3>
+                                    </div>
+                                    <p class="text-gray-600">
+                                        Continuously improving the platform
+                                        based on user feedback, expanding
+                                        features,
+                                        and building a trusted community of
+                                        property owners and tenants.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Values Section -->
+        <section class="py-16 bg-gray-900 text-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl lg:text-4xl font-bold mb-4">Our
+                        Values</h2>
+                    <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                        The principles that guide everything we do at RoomRental
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="text-center p-6">
+                        <div
+                            class="bg-blue-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-handshake text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">Trust &
+                            Transparency</h3>
+                        <p class="text-gray-300">
+                            We believe in building trust through transparent
+                            processes, verified listings,
+                            and honest communication between all parties.
+                        </p>
+                    </div>
+
+                    <div class="text-center p-6">
+                        <div
+                            class="bg-green-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-lightbulb text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">Innovation</h3>
+                        <p class="text-gray-300">
+                            Continuously pushing boundaries to create better
+                            solutions and improve
+                            the rental experience through technology.
+                        </p>
+                    </div>
+
+                    <div class="text-center p-6">
+                        <div
+                            class="bg-purple-500 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-heart text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">User-Centric</h3>
+                        <p class="text-gray-300">
+                            Every feature and decision is made with our users in
+                            mind, ensuring
+                            the platform serves their needs effectively.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 bg-white">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2
+                        class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Get
+                        In Touch</h2>
+                    <p class="text-xl text-gray-600">
+                        Have questions or want to know more about RoomRental?
+                        We'd love to hear from you.
+                    </p>
+                </div>
+
+                <div class="bg-gray-50 rounded-2xl p-8 shadow-lg">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3
+                                class="text-2xl font-bold text-gray-900 mb-6">Contact
+                                Information</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-blue-100 p-3 rounded-full mr-4">
+                                        <i
+                                            class="fas fa-envelope text-blue-600"></i>
+                                    </div>
+                                    <div>
+                                        <p
+                                            class="font-semibold text-gray-900">Email</p>
+                                        <p
+                                            class="text-gray-600">tulsiram@roomrental.com</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-green-100 p-3 rounded-full mr-4">
+                                        <i
+                                            class="fas fa-phone text-green-600"></i>
+                                    </div>
+                                    <div>
+                                        <p
+                                            class="font-semibold text-gray-900">Phone</p>
+                                        <p class="text-gray-600">+91--------</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center">
+                                    <div
+                                        class="bg-purple-100 p-3 rounded-full mr-4">
+                                        <i
+                                            class="fas fa-map-marker-alt text-purple-600"></i>
+                                    </div>
+                                    <div>
+                                        <p
+                                            class="font-semibold text-gray-900">Address</p>
+                                        <p class="text-gray-600">Chhattisgarh,
+                                            Kawardha City</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <form class="space-y-4">
+                                <div>
+                                    <label
+                                        class="block text-sm font-medium text-gray-700 mb-2">Your
+                                        Name</label>
+                                    <input type="text"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Enter your name">
+                                </div>
+                                <div>
+                                    <label
+                                        class="block text-sm font-medium text-gray-700 mb-2">Your
+                                        Email</label>
+                                    <input type="email"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Enter your email">
+                                </div>
+                                <div>
+                                    <label
+                                        class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                                    <textarea rows="4"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                        placeholder="Your message..."></textarea>
+                                </div>
+                                <button type="submit"
+                                    class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300 font-semibold">
+                                    Send Message
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-900 text-white py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- Company Info -->
+                    <div>
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="bg-blue-600 text-white p-2 rounded-lg mr-3">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <span class="text-xl font-bold">RoomRental</span>
+                        </div>
+                        <p class="text-gray-400 mb-4">
+                            Making room rental simple, secure, and accessible
+                            for everyone.
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-white">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                        <ul class="space-y-2">
+                            <li><a href="index.html"
+                                    class="text-gray-400 hover:text-white">Home</a></li>
+                            <li><a href="about.html"
+                                    class="text-gray-400 hover:text-white">About
+                                    Us</a></li>
+                            <li><a href="#mission"
+                                    class="text-gray-400 hover:text-white">Our
+                                    Mission</a></li>
+                            <li><a href="#contact"
+                                    class="text-gray-400 hover:text-white">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Support -->
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">Support</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white">Help
+                                    Center</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white">Privacy
+                                    Policy</a></li>
+                            <li><a href="#"
+                                    class="text-gray-400 hover:text-white">Terms
+                                    of Service</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Founder Note -->
+                    <div>
+                        <h3 class="text-lg font-bold mb-4">From The Founder</h3>
+                        <p class="text-gray-400 italic mb-4">
+                            "Building RoomRental has been an incredible journey. My vision is to create a platform that truly serves the community and makes finding a home easier for everyone."
+                        </p>
+                        <p class="text-blue-400 font-semibold">- Tulsiram
+                            Chandravanshi</p>
+                    </div>
+                </div>
+
+                <div
+                    class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                    <p>&copy; 2025 RoomRental. Founded by Tulsiram
+                        Chandravanshi. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Script for smooth scrolling -->
+        <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.profile-card, .timeline-item').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease-out';
+                observer.observe(el);
+            }); 
+        });
+
+        // Mobile Menu Functionality
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuClose = document.getElementById('mobileMenuClose');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('active');
+            mobileMenuOverlay.classList.toggle('active');
+            mobileMenuToggle.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        function closeMobileMenu() {
+            mobileMenu.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+            mobileMenuToggle.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+        mobileMenuClose.addEventListener('click', closeMobileMenu);
+        mobileMenuOverlay.addEventListener('click', closeMobileMenu);
+
+        // Close mobile menu when clicking on links
+        document.querySelectorAll('.mobile-menu-links a, .mobile-menu-auth a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        // Close mobile menu when pressing Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeMobileMenu();
+            }
+        });
+    </script>
+    </body>
+</html>

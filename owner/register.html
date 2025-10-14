@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Registration - RoomRental</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .password-strength {
+            height: 4px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .strength-weak { background-color: #ef4444; width: 25%; }
+        .strength-fair { background-color: #f59e0b; width: 50%; }
+        .strength-good { background-color: #3b82f6; width: 75%; }
+        .strength-strong { background-color: #10b981; width: 100%; }
+        
+        .requirement {
+            transition: all 0.3s ease;
+        }
+        .requirement.met {
+            color: #10b981;
+        }
+        .requirement.unmet {
+            color: #6b7280;
+        }
+        .requirement i.met {
+            color: #10b981;
+        }
+        .requirement i.unmet {
+            color: #d1d5db;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center py-12">
+    <div class="max-w-md w-full space-y-8 p-8">
+        <!-- Header -->
+        <div class="text-center">
+            <h2 class="text-3xl font-bold text-gray-900">Owner Registration</h2>
+            <p class="mt-2 text-gray-600">Create your owner account</p>
+            <a href="../public/index.html" class="text-blue-600 hover:text-blue-500 text-sm">
+                ← Back to homepage
+            </a>
+        </div>
+
+        <!-- Registration Form -->
+        <form class="mt-8 space-y-6 bg-white p-6 rounded-lg shadow-md" onsubmit="register(event)">
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Full Name *</label>
+                <input 
+                    id="name" 
+                    name="name" 
+                    type="text" 
+                    required 
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter your full name">
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email Address *</label>
+                <input 
+                    id="email" 
+                    name="email" 
+                    type="email" 
+                    required 
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter your email">
+            </div>
+
+            <div>
+                <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                <input 
+                    id="phone" 
+                    name="phone" 
+                    type="tel" 
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Enter your phone number">
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password *</label>
+                <div class="mt-1 relative">
+                    <input 
+                        id="password" 
+                        name="password" 
+                        type="password" 
+                        required 
+                        minlength="8"
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 pr-10"
+                        placeholder="Create a strong password"
+                        oninput="checkPasswordStrength()">
+                    <button type="button" 
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                            onclick="togglePasswordVisibility('password')">
+                        <i class="fas fa-eye text-gray-400 hover:text-gray-600"></i>
+                    </button>
+                </div>
+                
+                <!-- Password Strength Meter -->
+                <div class="mt-2 space-y-2">
+                    <div class="password-strength-container">
+                        <div class="flex justify-between text-xs text-gray-600 mb-1">
+                            <span>Password Strength:</span>
+                            <span id="strengthText">Weak</span>
+                        </div>
+                        <div class="password-strength strength-weak" id="passwordStrength"></div>
+                    </div>
+                    
+                    <!-- Password Requirements -->
+                    <div class="space-y-1 text-xs">
+                        <div class="requirement unmet" id="reqLength">
+                            <i class="fas fa-circle mr-1 unmet"></i>
+                            At least 8 characters
+                        </div>
+                        <div class="requirement unmet" id="reqUpperCase">
+                            <i class="fas fa-circle mr-1 unmet"></i>
+                            One uppercase letter (A-Z)
+                        </div>
+                        <div class="requirement unmet" id="reqLowerCase">
+                            <i class="fas fa-circle mr-1 unmet"></i>
+                            One lowercase letter (a-z)
+                        </div>
+                        <div class="requirement unmet" id="reqNumber">
+                            <i class="fas fa-circle mr-1 unmet"></i>
+                            One number (0-9)
+                        </div>
+                        <div class="requirement unmet" id="reqSpecial">
+                            <i class="fas fa-circle mr-1 unmet"></i>
+                            One special character (@$!%*?&)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password *</label>
+                <div class="mt-1 relative">
+                    <input 
+                        id="confirmPassword" 
+                        name="confirmPassword" 
+                        type="password" 
+                        required 
+                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 pr-10"
+                        placeholder="Confirm your password"
+                        oninput="checkPasswordMatch()">
+                    <button type="button" 
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                            onclick="togglePasswordVisibility('confirmPassword')">
+                        <i class="fas fa-eye text-gray-400 hover:text-gray-600"></i>
+                    </button>
+                </div>
+                <div class="mt-1 text-xs" id="passwordMatch"></div>
+            </div>
+
+            <div class="flex items-center">
+                <input 
+                    id="terms" 
+                    name="terms" 
+                    type="checkbox" 
+                    required 
+                    class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                <label for="terms" class="ml-2 block text-sm text-gray-900">
+                    I agree to the <a href="../public/terms.html" class="text-blue-600 hover:text-blue-500">Terms and Conditions</a>
+                </label>
+            </div>
+
+            <div>
+                <button 
+                    type="submit" 
+                    id="registerBtn"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    Create Account
+                </button>
+            </div>
+
+            <div class="text-center">
+                <p class="text-sm text-gray-600">
+                    Already have an account? 
+                    <a href="login.html" class="font-medium text-blue-600 hover:text-blue-500">Sign in here</a>
+                </p>
+            </div>
+        </form>
+
+        <!-- Notifications -->
+        <div id="notification" class="hidden fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50"></div>
+    </div>
+
+    <script>
+        // Password strength checker
+        function checkPasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthBar = document.getElementById('passwordStrength');
+            const strengthText = document.getElementById('strengthText');
+            
+            // Requirements
+            const hasMinLength = password.length >= 8;
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasLowerCase = /[a-z]/.test(password);
+            const hasNumbers = /\d/.test(password);
+            const hasSpecialChar = /[@$!%*?&]/.test(password);
+            
+            // Update requirement indicators
+            updateRequirement('reqLength', hasMinLength);
+            updateRequirement('reqUpperCase', hasUpperCase);
+            updateRequirement('reqLowerCase', hasLowerCase);
+            updateRequirement('reqNumber', hasNumbers);
+            updateRequirement('reqSpecial', hasSpecialChar);
+            
+            // Calculate strength score
+            const requirements = [hasMinLength, hasUpperCase, hasLowerCase, hasNumbers, hasSpecialChar];
+            const score = requirements.filter(Boolean).length;
+            
+            // Update strength meter
+            let strength = 'weak';
+            let strengthClass = 'strength-weak';
+            let text = 'Weak';
+            let textColor = 'text-red-600';
+            
+            if (score === 5) {
+                strength = 'strong';
+                strengthClass = 'strength-strong';
+                text = 'Strong';
+                textColor = 'text-green-600';
+            } else if (score >= 3) {
+                strength = 'good';
+                strengthClass = 'strength-good';
+                text = 'Good';
+                textColor = 'text-blue-600';
+            } else if (score >= 2) {
+                strength = 'fair';
+                strengthClass = 'strength-fair';
+                text = 'Fair';
+                textColor = 'text-yellow-600';
+            }
+            
+            strengthBar.className = `password-strength ${strengthClass}`;
+            strengthText.className = textColor;
+            strengthText.textContent = text;
+        }
+        
+        function updateRequirement(elementId, isMet) {
+            const element = document.getElementById(elementId);
+            const icon = element.querySelector('i');
+            
+            if (isMet) {
+                element.classList.remove('unmet');
+                element.classList.add('met');
+                icon.classList.remove('unmet');
+                icon.classList.add('met');
+            } else {
+                element.classList.remove('met');
+                element.classList.add('unmet');
+                icon.classList.remove('met');
+                icon.classList.add('unmet');
+            }
+        }
+        
+        function checkPasswordMatch() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const matchElement = document.getElementById('passwordMatch');
+            
+            if (!password || !confirmPassword) {
+                matchElement.textContent = '';
+                matchElement.className = 'mt-1 text-xs';
+                return;
+            }
+            
+            if (password === confirmPassword) {
+                matchElement.textContent = '✓ Passwords match';
+                matchElement.className = 'mt-1 text-xs text-green-600';
+            } else {
+                matchElement.textContent = '✗ Passwords do not match';
+                matchElement.className = 'mt-1 text-xs text-red-600';
+            }
+        }
+        
+        function togglePasswordVisibility(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = field.nextElementSibling.querySelector('i');
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.className = 'fas fa-eye-slash text-gray-400 hover:text-gray-600';
+            } else {
+                field.type = 'password';
+                icon.className = 'fas fa-eye text-gray-400 hover:text-gray-600';
+            }
+        }
+        
+        // Check if already logged in
+        if (localStorage.getItem('token')) {
+            window.location.href = 'dashboard.html';
+        }
+
+        async function register(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const registerBtn = document.getElementById('registerBtn');
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                showNotification('Passwords do not match!', 'error');
+                return;
+            }
+            
+            // Check password strength on client side
+            const hasMinLength = password.length >= 8;
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasLowerCase = /[a-z]/.test(password);
+            const hasNumbers = /\d/.test(password);
+            const hasSpecialChar = /[@$!%*?&]/.test(password);
+            
+            if (!hasMinLength || !hasUpperCase || !hasLowerCase || !hasNumbers || !hasSpecialChar) {
+                showNotification('Password does not meet all security requirements!', 'error');
+                return;
+            }
+            
+            // Show loading state
+            registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Creating account...';
+            registerBtn.disabled = true;
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, password, phone })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showNotification('Registration successful! Redirecting to login...', 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'login.html';
+                    }, 2000);
+                } else {
+                    // Handle validation errors
+                    if (data.errors) {
+                        throw new Error(data.errors.join(', '));
+                    } else if (data.requirements) {
+                        const missingRequirements = [];
+                        if (!data.requirements.minLength) missingRequirements.push('8 characters minimum');
+                        if (!data.requirements.hasUpperCase) missingRequirements.push('uppercase letter');
+                        if (!data.requirements.hasLowerCase) missingRequirements.push('lowercase letter');
+                        if (!data.requirements.hasNumbers) missingRequirements.push('number');
+                        if (!data.requirements.hasSpecialChar) missingRequirements.push('special character');
+                        
+                        throw new Error(`Password missing: ${missingRequirements.join(', ')}`);
+                    } else {
+                        throw new Error(data.message);
+                    }
+                }
+            } catch (error) {
+                showNotification(error.message, 'error');
+                registerBtn.innerHTML = 'Create Account';
+                registerBtn.disabled = false;
+            }
+        }
+        
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            } text-white`;
+            notification.textContent = message;
+            notification.classList.remove('hidden');
+            
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
