@@ -127,7 +127,11 @@
                     localStorage.setItem('token', data.data.token);
                     localStorage.setItem('user', JSON.stringify(data.data.user));
                     setLoginTime(); // Set login timestamp
-                    
+                    function setLoginTime() {
+                        const now = new Date().getTime();
+                        localStorage.setItem('loginTime', now);
+                    }
+
                     showNotification('Login successful! Redirecting...', 'success');
                     
                     // Redirect based on role
