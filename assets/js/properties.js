@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://backend-room-2.onrender.com/api';
 
 // Load properties when page loads
 document.addEventListener('DOMContentLoaded', function() {

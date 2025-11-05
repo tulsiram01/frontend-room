@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Add Property - RoomRental</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="../assets/css/styles.css">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    </head>
+    <body class="bg-gray-50">
+        <!-- Navigation -->
+        <nav class="bg-white shadow-lg">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex justify-between items-center py-4">
+                    <div class="flex items-center">
+                        <a href="dashboard.html"
+                            class="text-blue-600 hover:text-blue-500 mr-4">
+                            <i class="fas fa-arrow-left"></i>
+                        </a>
+                        <h1 class="text-xl font-bold text-gray-800"
+                            id="formTitle">Add New Property</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span id="userName" class="text-gray-700"></span>
+                        <button onclick="logout()"
+                            class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="max-w-4xl mx-auto px-4 py-8">
+            <!-- Property Form -->
+            <form class="bg-white rounded-lg shadow-md p-6"
+                onsubmit="saveProperty(event)" id="propertyForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Basic Information -->
+                    <div class="md:col-span-2">
+                        <h3
+                            class="text-lg font-semibold text-gray-900 mb-4">Basic
+                            Information</h3>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label for="title"
+                            class="block text-sm font-medium text-gray-700">Property
+                            Title *</label>
+                        <input type="text" id="title" name="title" required
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="e.g., Cozy 2-Bedroom Apartment in Downtown">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label for="description"
+                            class="block text-sm font-medium text-gray-700">Description
+                            *</label>
+                        <textarea id="description" name="description" rows="4"
+                            required
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="Describe your property..."></textarea>
+                    </div>
+
+                    <!-- Location -->
+                    <!-- Location -->
+                    <div>
+                        <label for="state"
+                            class="block text-sm font-medium text-gray-700">State
+                            *</label>
+                        <select id="state" name="state" required
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <option value>Select State</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="city"
+                            class="block text-sm font-medium text-gray-700">City
+                            *</label>
+                        <select id="city" name="city" required
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                            <option value>Select City</option>
+                        </select>
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label for="address"
+                            class="block text-sm font-medium text-gray-700">Full
+                            Address *</label>
+                        <input type="text" id="address" name="address" required
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="e.g., 123 Main Street, Downtown">
+                    </div>
+
+                    <!-- Property Details -->
+                    <div>
+                        <label for="rent"
+                            class="block text-sm font-medium text-gray-700">Monthly
+                            Rent ($) *</label>
+                        <input type="number" id="rent" name="rent" required
+                            min="0"
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="e.g., 1500">
+                    </div>
+
+                    <div>
+                        <label for="bedrooms"
+                            class="block text-sm font-medium text-gray-700">Bedrooms
+                            *</label>
+                        <input type="number" id="bedrooms" name="bedrooms"
+                            required min="0"
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="e.g., 2">
+                    </div>
+
+                    <div>
+                        <label for="bathrooms"
+                            class="block text-sm font-medium text-gray-700">Bathrooms
+                            *</label>
+                        <input type="number" id="bathrooms" name="bathrooms"
+                            required min="0" step="0.5"
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="e.g., 1.5">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label for="amenities"
+                            class="block text-sm font-medium text-gray-700">Amenities</label>
+                        <input type="text" id="amenities" name="amenities"
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="e.g., WiFi, Parking, Laundry, Gym (comma separated)">
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div class="md:col-span-2">
+                        <label
+                            class="block text-sm font-medium text-gray-700">Property
+                            Images</label>
+                        <div
+                            class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                            <div class="space-y-1 text-center">
+                                <i
+                                    class="fas fa-cloud-upload-alt text-gray-400 text-3xl"></i>
+                                <div class="flex text-sm text-gray-600">
+                                    <label for="images"
+                                        class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none">
+                                        <span>Upload images</span>
+                                        <input id="images" name="images"
+                                            type="file" multiple
+                                            accept="image/*"
+                                            class="sr-only"
+                                            onchange="previewImages(event)">
+                                    </label>
+                                    <p class="pl-1">or drag and drop</p>
+                                </div>
+                                <p class="text-xs text-gray-500">PNG, JPG, GIF
+                                    up to 5MB each</p>
+                            </div>
+                        </div>
+                        <div id="imagePreview"
+                            class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 hidden">
+                            <!-- Image previews will be shown here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="mt-8 flex justify-end space-x-4">
+                    <a href="dashboard.html"
+                        class="bg-gray-300 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-400">
+                        Cancel
+                    </a>
+                    <button type="submit" id="submitBtn"
+                        class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        Save Property
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Notifications -->
+        <div id="notification"
+            class="hidden fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50"></div>
+
+        <script src="../assets/js/auth.js"></script>
+        <script>
+        const token = checkAuth();
+        let isEditMode = false;
+        let currentPropertyId = null;
+
+        // Check if we're in edit mode (URL has ID parameter)
+        const urlParams = new URLSearchParams(window.location.search);
+        const propertyId = urlParams.get('id');
+        
+        if (propertyId) {
+            isEditMode = true;
+            currentPropertyId = propertyId;
+            document.getElementById('formTitle').textContent = 'Edit Property';
+            document.getElementById('submitBtn').textContent = 'Update Property';
+            loadPropertyData(propertyId);
+        }
+
+        // Display user name
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        document.getElementById('userName').textContent = user.name || 'User';
+
+        function previewImages(event) {
+            const files = event.target.files;
+            const preview = document.getElementById('imagePreview');
+            
+            if (files.length > 0) {
+                preview.innerHTML = '';
+                preview.classList.remove('hidden');
+                
+                for (let file of files) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'w-full h-32 object-cover rounded-lg';
+                        preview.appendChild(img);
+                    }
+                    reader.readAsDataURL(file);
+                }
+            } else {
+                preview.classList.add('hidden');
+            }
+        }
+
+        async function loadPropertyData(id) {
+            try {
+                const response = await fetch(`http://localhost:5000/api/properties/${id}`, {
+                    headers: getAuthHeaders()
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const property = data.data;
+                    
+                    // Fill form fields
+                    document.getElementById('title').value = property.title;
+                    document.getElementById('description').value = property.description;
+                    document.getElementById('state').value = property.state;
+                    document.getElementById('city').value = property.city;
+                    document.getElementById('address').value = property.address;
+                    document.getElementById('rent').value = property.rent;
+                    document.getElementById('bedrooms').value = property.bedrooms;
+                    document.getElementById('bathrooms').value = property.bathrooms;
+                    document.getElementById('amenities').value = property.amenities?.join(', ') || '';
+                    
+                    // Show existing images
+                    if (property.images && property.images.length > 0) {
+                        const preview = document.getElementById('imagePreview');
+                        preview.innerHTML = '';
+                        preview.classList.remove('hidden');
+                        
+                        property.images.forEach(image => {
+                            const img = document.createElement('img');
+                            img.src = `http://localhost:5000/${image.path}`;
+                            img.className = 'w-full h-32 object-cover rounded-lg';
+                            preview.appendChild(img);
+                        });
+                    }
+                }
+            } catch (error) {
+                showNotification('Error loading property data', 'error');
+            }
+        }
+
+        async function saveProperty(event) {
+            event.preventDefault();
+            
+            const formData = new FormData();
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Add form data
+            formData.append('title', document.getElementById('title').value);
+            formData.append('description', document.getElementById('description').value);
+            formData.append('state', document.getElementById('state').value);
+            formData.append('city', document.getElementById('city').value);
+            formData.append('address', document.getElementById('address').value);
+            formData.append('rent', document.getElementById('rent').value);
+            formData.append('bedrooms', document.getElementById('bedrooms').value);
+            formData.append('bathrooms', document.getElementById('bathrooms').value);
+            formData.append('amenities', document.getElementById('amenities').value);
+            
+            // Add images
+            const imageInput = document.getElementById('images');
+            for (let file of imageInput.files) {
+                formData.append('images', file);
+            }
+            
+            // Show loading state
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Saving...';
+            submitBtn.disabled = true;
+            
+            try {
+                const url = isEditMode 
+                    ? `http://localhost:5000/api/properties/${currentPropertyId}`
+                    : 'http://localhost:5000/api/properties';
+                
+                const method = isEditMode ? 'PUT' : 'POST';
+                
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showNotification(
+                        `Property ${isEditMode ? 'updated' : 'created'} successfully!`, 
+                        'success'
+                    );
+                    
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1000);
+                } else {
+                    throw new Error(data.message);
+                }
+            } catch (error) {
+                showNotification(error.message, 'error');
+                submitBtn.innerHTML = isEditMode ? 'Update Property' : 'Save Property';
+                submitBtn.disabled = false;
+            }
+        }
+        
+        function showNotification(message, type) {
+            const notification = document.getElementById('notification');
+            notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            } text-white`;
+            notification.textContent = message;
+            notification.classList.remove('hidden');
+            
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 3000);
+        }
+        // ---- Indian States and Cities ----
+        const stateCityMap = {
+            "Andhra Pradesh": ["Visakhapatnam", "Vijayawada", "Guntur", "Nellore", "Kurnool"],
+            "Arunachal Pradesh": ["Itanagar", "Tawang", "Ziro", "Pasighat", "Bomdila"],
+            "Assam": ["Guwahati", "Dibrugarh", "Silchar", "Jorhat", "Tezpur"],
+            "Bihar": ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur", "Darbhanga"],
+            "Chhattisgarh": ["Raipur", "Bhilai", "Bilaspur", "Korba", "Durg","Kawardha"],
+            "Delhi": ["New Delhi", "Dwarka", "Rohini", "Karol Bagh", "Saket"],
+            "Goa": ["Panaji", "Margao", "Vasco da Gama", "Mapusa", "Ponda"],
+            "Gujarat": ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar"],
+            "Haryana": ["Gurugram", "Faridabad", "Panipat", "Ambala", "Hisar"],
+            "Himachal Pradesh": ["Shimla", "Manali", "Dharamshala", "Kullu", "Solan"],
+            "Jharkhand": ["Ranchi", "Jamshedpur", "Dhanbad", "Bokaro", "Hazaribagh"],
+            "Karnataka": ["Bengaluru", "Mysuru", "Mangalore", "Hubballi", "Belagavi"],
+            "Kerala": ["Thiruvananthapuram", "Kochi", "Kozhikode", "Thrissur", "Alappuzha"],
+            "Madhya Pradesh": ["Bhopal", "Indore", "Gwalior", "Jabalpur", "Ujjain"],
+            "Maharashtra": ["Mumbai", "Pune", "Nagpur", "Nashik", "Aurangabad"],
+            "Manipur": ["Imphal", "Churachandpur", "Thoubal", "Bishnupur"],
+            "Meghalaya": ["Shillong", "Tura", "Nongpoh", "Jowai"],
+            "Mizoram": ["Aizawl", "Lunglei", "Champhai", "Serchhip"],
+            "Nagaland": ["Kohima", "Dimapur", "Mokokchung", "Tuensang"],
+            "Odisha": ["Bhubaneswar", "Cuttack", "Rourkela", "Sambalpur", "Puri"],
+            "Punjab": ["Ludhiana", "Amritsar", "Jalandhar", "Patiala", "Bathinda"],
+            "Rajasthan": ["Jaipur", "Udaipur", "Jodhpur", "Kota", "Ajmer"],
+            "Sikkim": ["Gangtok", "Namchi", "Gyalshing", "Mangan"],
+            "Tamil Nadu": ["Chennai", "Coimbatore", "Madurai", "Salem", "Tiruchirappalli"],
+            "Telangana": ["Hyderabad", "Warangal", "Nizamabad", "Karimnagar"],
+            "Tripura": ["Agartala", "Udaipur", "Dharmanagar", "Ambassa"],
+            "Uttar Pradesh": ["Lucknow", "Kanpur", "Varanasi", "Agra", "Noida", "Ghaziabad"],
+            "Uttarakhand": ["Dehradun", "Haridwar", "Nainital", "Rishikesh"],
+            "West Bengal": ["Kolkata", "Siliguri", "Howrah", "Durgapur", "Asansol"]
+        };
+
+        // ---- Populate States ----
+        const stateSelect = document.getElementById('state');
+        const citySelect = document.getElementById('city');
+
+        // Add all states
+        Object.keys(stateCityMap).forEach(state => {
+            const option = document.createElement('option');
+            option.value = state;
+            option.textContent = state;
+            stateSelect.appendChild(option);
+        });
+
+        // ---- When State Changes ----
+        stateSelect.addEventListener('change', function () {
+            const selectedState = this.value;
+            citySelect.innerHTML = '<option value="">Select City</option>'; // Reset
+
+            if (selectedState && stateCityMap[selectedState]) {
+                stateCityMap[selectedState].forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city;
+                    option.textContent = city;
+                    citySelect.appendChild(option);
+                });
+            }
+        });
+
+    </script>
+    </body>
+</html>

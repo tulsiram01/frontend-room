@@ -1,7 +1,7 @@
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://backend-room-2.onrender.com/api';
 
-// Session timeout (24 hours)
-const SESSION_TIMEOUT = 24 * 60 * 60 * 1000;
+// Session timeout (2 hours)
+const SESSION_TIMEOUT = 2 * 60 * 60 * 1000;
 
 // Check if user is authenticated with session validation
 function checkAuth() {

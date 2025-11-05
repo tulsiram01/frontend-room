@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE = 'https://backend-room-2.onrender.com/api';
 
 // Initialize dashboard
 document.addEventListener('DOMContentLoaded', function() {
@@ -72,7 +72,7 @@ function displayProperties(properties) {
                 <div class="flex items-center">
                     <div class="flex-shrink-0 h-12 w-12">
                         ${property.images && property.images.length > 0 ? 
-                            `<img class="h-12 w-12 rounded-lg object-cover" src="http://localhost:5000/${property.images[0].path}" alt="${property.title}">` :
+                            `<img class="h-12 w-12 rounded-lg object-cover" src="https://backend-room-2.onrender.com/${property.images[0].path}" alt="${property.title}">` :
                             `<div class="h-12 w-12 bg-gray-200 rounded-lg flex items-center justify-center">
                                 <i class="fas fa-home text-gray-400"></i>
                             </div>`

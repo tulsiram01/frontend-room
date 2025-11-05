@@ -156,14 +156,15 @@
                 <div class="flex justify-between items-center py-4">
                     <!-- Logo -->
                     <div class="flex items-center">
-                        <a href="index.html" class="flex items-center">
-                            <div
-                                class="bg-blue-600 text-white p-2 rounded-lg mr-3">
-                                <i class="fas fa-home"></i>
-                            </div>
-                            <span
-                                class="text-xl font-bold text-gray-900">RoomRental</span>
-                        </a>
+                        <div class="flex items-center">
+                            <!-- Logo Image -->
+                            <img 
+                                src="../logo/room-rental.png" 
+                                alt="RoomRental Logo" 
+                                class="h-10 w-auto mr-3"
+                                onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='flex';"
+                            >
+                        </div>
                     </div>
 
                     <!-- Desktop Menu -->
@@ -171,17 +172,17 @@
                         class="desktop-menu hidden md:flex items-center space-x-8">
                         <a href="index.html"
                             class="text-gray-600 hover:text-blue-600 transition">Home</a>
-                        <a href="../owner/login.html"
+                        <a href="owner/login.html"
                             class="text-gray-600 hover:text-blue-600 transition">Sign
                             In</a>
-                        <a href="../owner/register.html"
+                        <a href="owner/register.html"
                             class="text-gray-600 hover:text-blue-600 transition">Sign
                             Up</a>
                         <a href="support.html"
                             class="text-gray-600 hover:text-blue-600 transition">Support</a>
                         <a href="help.html"
                             class="text-blue-600 font-semibold">Help Center</a>
-                        <a href="../owner/dashboard.html"
+                        <a href="owner/dashboard.html"
                             class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Owner
                             Dashboard</a>
                     </div>
@@ -205,8 +206,8 @@
 
             <div class="mobile-menu-links">
                 <a href="index.html" class="text-gray-600 hover:text-blue-600 transition">Home</a>
-                    <a href="../owner/register.html" class="text-gray-600 hover:text-blue-600 transition">Sign In</a>
-                    <a href="../owner/login.html" class="text-gray-600 hover:text-blue-600 transition">Sign Up</a>
+                    <a href="owner/register.html" class="text-gray-600 hover:text-blue-600 transition">Sign In</a>
+                    <a href="owner/login.html" class="text-gray-600 hover:text-blue-600 transition">Sign Up</a>
                     <a href="support.html" class="text-gray-600 hover:text-blue-600 transition">Support</a>
                     <a href="help.html" class="text-blue-600 font-semibold">Help Center</a>
             </div>
@@ -783,13 +784,13 @@
                     <div>
                         <h3 class="text-lg font-bold mb-4">Support</h3>
                         <ul class="space-y-2">
-                            <li><a href="#"
+                            <li><a href="help.html"
                                     class="text-gray-400 hover:text-white">Help
                                     Center</a></li>
-                            <li><a href="#"
+                            <li><a href="privacy.html"
                                     class="text-gray-400 hover:text-white">Privacy
                                     Policy</a></li>
-                            <li><a href="#"
+                            <li><a href="terms.html"
                                     class="text-gray-400 hover:text-white">Terms
                                     of Service</a></li>
                         </ul>

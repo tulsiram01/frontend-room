@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Owner Registration - RoomRental</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        body {
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+        }
+        .registration-container {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
         .password-strength {
             height: 4px;
             border-radius: 2px;
@@ -35,154 +40,157 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 min-h-screen flex items-center justify-center py-12">
-    <div class="max-w-md w-full space-y-8 p-8">
-        <!-- Header -->
-        <div class="text-center">
-            <h2 class="text-3xl font-bold text-gray-900">Owner Registration</h2>
-            <p class="mt-2 text-gray-600">Create your owner account</p>
-            <a href="../public/index.html" class="text-blue-600 hover:text-blue-500 text-sm">
-                ← Back to homepage
-            </a>
-        </div>
-
-        <!-- Registration Form -->
-        <form class="mt-8 space-y-6 bg-white p-6 rounded-lg shadow-md" onsubmit="register(event)">
-            <div>
-                <label for="name" class="block text-sm font-medium text-gray-700">Full Name *</label>
-                <input 
-                    id="name" 
-                    name="name" 
-                    type="text" 
-                    required 
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Enter your full name">
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-md w-full">
+        <!-- Combined Header and Form Container -->
+        <div class="bg-white rounded-lg shadow-md registration-container">
+            <!-- Header Section -->
+            <div class="text-center p-6 border-b border-gray-200">
+                <h2 class="text-3xl font-bold text-gray-900">Registration/रजिस्टर</h2>
+                <p class="mt-2 text-gray-600">Create your account/अपना खाता बनाएँ</p>
+                <a href="../index.html" class="inline-block mt-2 text-blue-600 hover:text-blue-500 text-sm">
+                    Go Back /वापस
+                </a>
             </div>
 
-            <div>
-                <label for="email" class="block text-sm font-medium text-gray-700">Email Address *</label>
-                <input 
-                    id="email" 
-                    name="email" 
-                    type="email" 
-                    required 
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Enter your email">
-            </div>
-
-            <div>
-                <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
-                <input 
-                    id="phone" 
-                    name="phone" 
-                    type="tel" 
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                    placeholder="Enter your phone number">
-            </div>
-
-            <div>
-                <label for="password" class="block text-sm font-medium text-gray-700">Password *</label>
-                <div class="mt-1 relative">
+            <!-- Registration Form Section -->
+            <form class="p-6 space-y-6" onsubmit="register(event)">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Full Name /पुरा नाम *</label>
                     <input 
-                        id="password" 
-                        name="password" 
-                        type="password" 
+                        id="name" 
+                        name="name" 
+                        type="text" 
                         required 
-                        minlength="8"
-                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 pr-10"
-                        placeholder="Create a strong password"
-                        oninput="checkPasswordStrength()">
-                    <button type="button" 
-                            class="absolute inset-y-0 right-0 pr-3 flex items-center"
-                            onclick="togglePasswordVisibility('password')">
-                        <i class="fas fa-eye text-gray-400 hover:text-gray-600"></i>
-                    </button>
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Enter your full name">
                 </div>
-                
-                <!-- Password Strength Meter -->
-                <div class="mt-2 space-y-2">
-                    <div class="password-strength-container">
-                        <div class="flex justify-between text-xs text-gray-600 mb-1">
-                            <span>Password Strength:</span>
-                            <span id="strengthText">Weak</span>
-                        </div>
-                        <div class="password-strength strength-weak" id="passwordStrength"></div>
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email Address/मेल पता *</label>
+                    <input 
+                        id="email" 
+                        name="email" 
+                        type="email" 
+                        required 
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Enter your email">
+                </div>
+
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700">Mobile Number/मोबाइल नंबर</label>
+                    <input 
+                        id="phone" 
+                        name="phone" 
+                        type="tel" 
+                        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Enter your phone number">
+                </div>
+
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password/पासवर्ड *</label>
+                    <div class="mt-1 relative">
+                        <input 
+                            id="password" 
+                            name="password" 
+                            type="password" 
+                            required 
+                            minlength="8"
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 pr-10"
+                            placeholder="Create a strong password"
+                            oninput="checkPasswordStrength()">
+                        <button type="button" 
+                                class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                                onclick="togglePasswordVisibility('password')">
+                            <i class="fas fa-eye text-gray-400 hover:text-gray-600"></i>
+                        </button>
                     </div>
                     
-                    <!-- Password Requirements -->
-                    <div class="space-y-1 text-xs">
-                        <div class="requirement unmet" id="reqLength">
-                            <i class="fas fa-circle mr-1 unmet"></i>
-                            At least 8 characters
+                    <!-- Password Strength Meter -->
+                    <div class="mt-2 space-y-2">
+                        <div class="password-strength-container">
+                            <div class="flex justify-between text-xs text-gray-600 mb-1">
+                                <span>Password Strength:</span>
+                                <span id="strengthText">Weak</span>
+                            </div>
+                            <div class="password-strength strength-weak" id="passwordStrength"></div>
                         </div>
-                        <div class="requirement unmet" id="reqUpperCase">
-                            <i class="fas fa-circle mr-1 unmet"></i>
-                            One uppercase letter (A-Z)
-                        </div>
-                        <div class="requirement unmet" id="reqLowerCase">
-                            <i class="fas fa-circle mr-1 unmet"></i>
-                            One lowercase letter (a-z)
-                        </div>
-                        <div class="requirement unmet" id="reqNumber">
-                            <i class="fas fa-circle mr-1 unmet"></i>
-                            One number (0-9)
-                        </div>
-                        <div class="requirement unmet" id="reqSpecial">
-                            <i class="fas fa-circle mr-1 unmet"></i>
-                            One special character (@$!%*?&)
+                        
+                        <!-- Password Requirements -->
+                        <div class="space-y-1 text-xs">
+                            <div class="requirement unmet" id="reqLength">
+                                <i class="fas fa-circle mr-1 unmet"></i>
+                                At least 8 characters
+                            </div>
+                            <div class="requirement unmet" id="reqUpperCase">
+                                <i class="fas fa-circle mr-1 unmet"></i>
+                                One uppercase letter (A-Z)
+                            </div>
+                            <div class="requirement unmet" id="reqLowerCase">
+                                <i class="fas fa-circle mr-1 unmet"></i>
+                                One lowercase letter (a-z)
+                            </div>
+                            <div class="requirement unmet" id="reqNumber">
+                                <i class="fas fa-circle mr-1 unmet"></i>
+                                One number (0-9)
+                            </div>
+                            <div class="requirement unmet" id="reqSpecial">
+                                <i class="fas fa-circle mr-1 unmet"></i>
+                                One special character (@$!%*?&)
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div>
-                <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password *</label>
-                <div class="mt-1 relative">
+                <div>
+                    <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password *</label>
+                    <div class="mt-1 relative">
+                        <input 
+                            id="confirmPassword" 
+                            name="confirmPassword" 
+                            type="password" 
+                            required 
+                            class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 pr-10"
+                            placeholder="Confirm your password"
+                            oninput="checkPasswordMatch()">
+                        <button type="button" 
+                                class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                                onclick="togglePasswordVisibility('confirmPassword')">
+                            <i class="fas fa-eye text-gray-400 hover:text-gray-600"></i>
+                        </button>
+                    </div>
+                    <div class="mt-1 text-xs" id="passwordMatch"></div>
+                </div>
+
+                <div class="flex items-center">
                     <input 
-                        id="confirmPassword" 
-                        name="confirmPassword" 
-                        type="password" 
+                        id="terms" 
+                        name="terms" 
+                        type="checkbox" 
                         required 
-                        class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 pr-10"
-                        placeholder="Confirm your password"
-                        oninput="checkPasswordMatch()">
-                    <button type="button" 
-                            class="absolute inset-y-0 right-0 pr-3 flex items-center"
-                            onclick="togglePasswordVisibility('confirmPassword')">
-                        <i class="fas fa-eye text-gray-400 hover:text-gray-600"></i>
+                        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                    <label for="terms" class="ml-2 block text-sm text-gray-900">
+                        I agree to the <a href="../terms.html" class="text-blue-600 hover:text-blue-500">Terms and Conditions</a>
+                    </label>
+                </div>
+
+                <div>
+                    <button 
+                        type="submit" 
+                        id="registerBtn"
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">
+                        Create Account
                     </button>
                 </div>
-                <div class="mt-1 text-xs" id="passwordMatch"></div>
-            </div>
 
-            <div class="flex items-center">
-                <input 
-                    id="terms" 
-                    name="terms" 
-                    type="checkbox" 
-                    required 
-                    class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
-                <label for="terms" class="ml-2 block text-sm text-gray-900">
-                    I agree to the <a href="../public/terms.html" class="text-blue-600 hover:text-blue-500">Terms and Conditions</a>
-                </label>
-            </div>
-
-            <div>
-                <button 
-                    type="submit" 
-                    id="registerBtn"
-                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                    Create Account
-                </button>
-            </div>
-
-            <div class="text-center">
-                <p class="text-sm text-gray-600">
-                    Already have an account? 
-                    <a href="login.html" class="font-medium text-blue-600 hover:text-blue-500">Sign in here</a>
-                </p>
-            </div>
-        </form>
+                <div class="text-center pt-4 border-t border-gray-200">
+                    <p class="text-sm text-gray-600">
+                        Already have an account?/क्या आपके पास पहले से एक खाता मौजूद है? 
+                        <a href="login.html" class="font-medium text-blue-600 hover:text-blue-500">Sign in here</a>
+                    </p>
+                </div>
+            </form>
+        </div>
 
         <!-- Notifications -->
         <div id="notification" class="hidden fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50"></div>
@@ -329,7 +337,7 @@
             registerBtn.disabled = true;
             
             try {
-                const response = await fetch('http://localhost:5000/api/auth/register', {
+                const response = await fetch('https://backend-room-2.onrender.com/api/auth/register', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

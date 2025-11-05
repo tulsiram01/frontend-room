@@ -7,7 +7,7 @@
         <script src="https://cdn.tailwindcss.com"></script>
         <link rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-        <link rel="stylesheet" href="../assets/css/styles.css">
+        <link rel="stylesheet" href="assets/css/styles.css">
         <script>
         tailwind.config = {
             theme: {
@@ -46,26 +46,30 @@
                 <div class="flex justify-between items-center py-4">
                     <!-- Logo -->
                     <div class="flex items-center">
-                        <div class="bg-blue-600 text-white p-2 rounded-lg mr-3">
-                            <i class="fas fa-home text-xl"></i>
+                        <div class="flex items-center">
+                            <!-- Logo Image -->
+                            <img 
+                                src="../logo/room-rental.png" 
+                                alt="RoomRental Logo" 
+                                class="h-10 w-auto mr-3"
+                                onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='flex';"
+                            >
                         </div>
-                        <span
-                            class="text-2xl font-bold text-gray-900">RoomRental</span>
                     </div>
 
                     <!-- Desktop Menu -->
                     <div class="hidden md:flex items-center space-x-8">
-                        <a href="../owner/login.html"
+                        <a href="owner/login.html"
                             class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Sign In</a>
-                        <a href="../owner/register.html"
+                        <a href="owner/register.html"
                             class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Sign Up</a>
-                        <a href="../owner/property-form.html"
+                        <a href="owner/property-form.html"
                             class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Add a Property</a>
                         <a href="about.html"
                             class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">About</a>
-                        <a href="../public/privacy.html"
+                        <a href="privacy.html"
                             class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Privacy-policy</a>
-                        <a href="../public/help.html"
+                        <a href="help.html"
                             class="text-gray-700 hover:text-blue-600 font-medium transition duration-300">Help Center</a>
                     </div>
 
@@ -91,19 +95,19 @@
                     <div
                         class="px-2 pt-2 pb-4 space-y-2 bg-white border-t border-gray-200 shadow-lg">
                         <!-- Mobile Navigation Links -->
-                        <a href="../owner/login.html"
+                        <a href="owner/login.html"
                             class="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg font-medium transition duration-300"
                             onclick="closeMobileMenu()">
                             <i
                                 class="fas fa-star mr-3 text-blue-500"></i>Sign In
                         </a>
-                        <a href="../owner/register.html"
+                        <a href="owner/register.html"
                             class="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg font-medium transition duration-300"
                             onclick="closeMobileMenu()">
                             <i
                                 class="fas fa-play-circle mr-3 text-green-500"></i>Sign Up
                         </a>
-                        <a href="../owner/property-form.html"
+                        <a href="owner/property-form.html"
                             class="block px-4 py-3 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg font-medium transition duration-300"
                             onclick="closeMobileMenu()">
                             <i
@@ -130,7 +134,7 @@
 
                         <!-- Mobile Auth Buttons -->
                         <div class="pt-4 border-t border-gray-200 space-y-3">
-                            <a href="../admin/admin-panel.html"
+                            <a href="admin/admin-panel.html"
                                 class="block w-full text-center px-4 py-3 bg-gray-800 text-white rounded-lg hover:bg-gray-900 font-medium transition duration-300"
                                 onclick="closeMobileMenu()">
                                 <i class="fas fa-cog mr-2"></i>Admin Panel
@@ -154,8 +158,11 @@
                             <span class="text-yellow-300">Room Rental</span>
                         </h1>
                         <p class="text-xl lg:text-2xl mb-8 text-blue-100">
-                            Discover affordable rooms, connect with roommates,
-                            and make your next rental experience amazing.
+                            <!--Discover affordable rooms, connect with roommates,-->
+                            <!--and make your next rental experience amazing.-->
+                            आपका आदर्श रूममेट और कमरा ढूंढें
+किफायती कमरे खोजें, विश्वसनीय रूममेट्स से जुड़ें, और अपना किराये का अनुभव सुखद बनाएं।
+
                         </p>
 
                         <!-- Stats -->
@@ -261,11 +268,10 @@
                 <div class="text-center mb-12">
                     <h2
                         class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                        Featured Properties
+                        फीचर्ड प्रॉपर्टीज (Featured Properties)
                     </h2>
                     <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                        Discover handpicked rooms and apartments that match your
-                        lifestyle and budget
+                        अपनी लाइफस्टाइल और बजट के अनुरूप हमारी चुनिंदा प्रॉपर्टीज (सावधानी से चुने गए कमरे और अपार्टमेंट) की खोज करें।
                     </p>
                 </div>
 
@@ -279,8 +285,7 @@
                 <div id="loading" class="text-center py-12">
                     <div
                         class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-                    <p class="text-gray-600 mt-4 text-lg">Loading amazing
-                        properties for you...</p>
+                    <p class="text-gray-600 mt-4 text-lg">आपके लिए बेहतरीन प्रॉपर्टीज लोड हो रही हैं....</p>
                 </div>
 
                 <!-- Empty State -->
@@ -289,11 +294,9 @@
                         class="bg-gray-100 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
                         <i class="fas fa-home text-4xl text-gray-400"></i>
                     </div>
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4">No
-                        Properties Found</h3>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4">आपकी खोज से मेल खाती कोई प्रॉपर्टी नहीं मिली</h3>
                     <p class="text-gray-600 mb-8 max-w-md mx-auto">
-                        We couldn't find any properties matching your criteria.
-                        Try adjusting your filters or browse all properties.
+                        कृपया अपनी खोज के फिल्टर्स को समायोजित करें या सभी प्रॉपर्टीज ब्राउज़ करें।
                     </p>
                     <button onclick="clearFilters()"
                         class="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition duration-300">
@@ -320,8 +323,7 @@
                         Why Choose RoomRental?
                     </h2>
                     <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                        We make finding and renting rooms simple, secure, and
-                        stress-free
+                        हम कमरा ढूंढने और किराया लेने की प्रक्रिया को सरल, सुरक्षित और तनावमुक्त बनाते हैं।
                     </p>
                 </div>
 
@@ -339,8 +341,7 @@
                             class="text-xl font-bold text-gray-900 mb-4">Verified
                             Listings</h3>
                         <p class="text-gray-600">
-                            Every property and owner is verified to ensure your
-                            safety and peace of mind.
+                            आपकी सुरक्षा और शांति के लिए प्रत्येक प्रॉपर्टी और मालिक का सत्यापन (Verification) किया जाता है।
                         </p>
                     </div>
 
@@ -354,8 +355,7 @@
                         <h3 class="text-xl font-bold text-gray-900 mb-4">Smart
                             Search</h3>
                         <p class="text-gray-600">
-                            Find your perfect match with advanced filters and
-                            location-based search.
+                            लोकेशन-बेस्ड सर्च और उन्नत फिल्टर्स के साथ अपना परफेक्ट मैच ढूंढें।
                         </p>
                     </div>
 
@@ -369,8 +369,7 @@
                         <h3 class="text-xl font-bold text-gray-900 mb-4">No
                             Brokerage Fees</h3>
                         <p class="text-gray-600">
-                            Connect directly with property owners and save on
-                            brokerage costs.
+                            प्रॉपर्टी मालिकों से सीधा संपर्क (Direct Contact) करें और ब्रोकरेज चार्जेज (Zero Brokerage) पर बचत करें।
                         </p>
                     </div>
 
@@ -384,8 +383,7 @@
                         <h3 class="text-xl font-bold text-gray-900 mb-4">Direct
                             Communication</h3>
                         <p class="text-gray-600">
-                            Chat directly with property owners and get your
-                            questions answered quickly.
+                            मालिकों के साथ सीधी बातचीत (Direct Chat) करें और अपने सवालों के तुरंत जवाब पाएं।
                         </p>
                     </div>
                 </div>
@@ -401,7 +399,7 @@
                         How It Works
                     </h2>
                     <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                        Get your perfect room in just a few simple steps
+                        बस तीन आसान चरणों में अपना नया घर पाएं:
                     </p>
                 </div>
 
@@ -416,8 +414,7 @@
                         <h3 class="text-xl font-bold text-gray-900 mb-4">Search
                             & Explore</h3>
                         <p class="text-gray-600">
-                            Use our smart filters to find rooms that match your
-                            preferences, budget, and location.
+                            अपनी प्राथमिकताओं (Preferences), बजट, और लोकेशन के हिसाब से कमरे ढूंढने के लिए हमारे स्मार्ट फिल्टर्स का इस्तेमाल करें।
                         </p>
                     </div>
 
@@ -431,8 +428,7 @@
                         <h3 class="text-xl font-bold text-gray-900 mb-4">Connect
                             & Visit</h3>
                         <p class="text-gray-600">
-                            Contact property owners directly, schedule visits,
-                            and see the properties in person.
+                            प्रॉपर्टी मालिकों से सीधे संपर्क करें, प्रॉपर्टी विजिट (Site Visit) शेड्यूल करें और जगह व्यक्तिगत रूप से देखें।
                         </p>
                     </div>
 
@@ -446,8 +442,7 @@
                         <h3 class="text-xl font-bold text-gray-900 mb-4">Move
                             In</h3>
                         <p class="text-gray-600">
-                            Complete the paperwork and move into your new home.
-                            It's that simple!
+                            कागजी कार्यवाही (Paperwork) पूरी करें और अपने नए घर में मूव-इन करें। बस इतना ही आसान!
                         </p>
                     </div>
                 </div>
@@ -639,7 +634,7 @@
                         class="bg-yellow-400 text-gray-900 px-8 py-4 rounded-lg font-bold hover:bg-yellow-300 transition duration-300">
                         Start Searching Now
                     </a>
-                    <a href="../owner/register.html"
+                    <a href="owner/register.html"
                         class="border-2 border-white text-white px-8 py-4 rounded-lg font-bold hover:bg-white hover:text-blue-600 transition duration-300">
                         List Your Property
                     </a>
@@ -734,7 +729,7 @@
         </footer>
 
         <!-- Scripts -->
-        <script src="../assets/js/properties.js"></script>
+        <script src="assets/js/properties.js"></script>
         <script>
         // Mobile Menu Functionality
         function toggleMobileMenu() {
@@ -840,7 +835,7 @@
                 const maxRent = document.getElementById('maxRentFilter').value;
                 const bedrooms = document.getElementById('bedroomsFilter').value;
                 
-                let url = `http://localhost:5000/api/properties/public?`;
+                let url = `https://backend-room-2.onrender.com/api/properties/public?`;
                 const params = new URLSearchParams();
                 
                 if (state) params.append('state', state);
@@ -895,7 +890,7 @@
         <div class="property-card bg-white rounded-2xl shadow-lg overflow-hidden">
             <div class="relative">
                 ${property.images && property.images.length > 0 ? 
-                    `<img src="http://localhost:5000${property.images[0].path}" alt="${property.title}" 
+                    `<img src="https://backend-room-2.onrender.com${property.images[0].path}" alt="${property.title}" 
                           class="w-full h-48 object-cover" 
                           onerror="this.src='https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.1&auto=format&fit=crop&w=500&q=80'">` :
                     `<div class="w-full h-48 bg-gradient-to-br from-blue-400 to-purple-600 flex items-center justify-center">
