@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Property - RoomRental</title>
+    <title>Add Property - RoomRental</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Add Leaflet for maps -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <style>
         .file-upload-area {
             border: 2px dashed #d1d5db;
@@ -24,84 +21,6 @@
             border-color: #3b82f6;
             background-color: #eff6ff;
         }
-        #propertyMap {
-            height: 300px;
-            width: 100%;
-            border-radius: 0.5rem;
-            margin-top: 0.5rem;
-            z-index: 1;
-        }
-        .location-tag {
-            position: absolute;
-            bottom: 8px;
-            left: 8px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            max-width: calc(100% - 16px);
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .geotag-indicator {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 10px;
-        }
-        .existing-image {
-            position: relative;
-        }
-        .existing-image-badge {
-            position: absolute;
-            top: 8px;
-            left: 8px;
-            background: rgba(59, 130, 246, 0.9);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 10px;
-        }
-        .loading-spinner {
-            border: 4px solid #f3f4f6;
-            border-top: 4px solid #3b82f6;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .tab-button {
-            padding: 12px 24px;
-            border-radius: 8px 8px 0 0;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        .tab-button.active {
-            background-color: white;
-            color: #3b82f6;
-            border-bottom: 3px solid #3b82f6;
-        }
-        .tab-button:not(.active) {
-            background-color: #f3f4f6;
-            color: #6b7280;
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
-        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -113,7 +32,7 @@
                     <a href="dashboard.html" class="text-blue-600 hover:text-blue-500 mr-4">
                         <i class="fas fa-arrow-left"></i>
                     </a>
-                    <h1 class="text-xl font-bold text-gray-800" id="formTitle">Edit Property/संपत्ति संपादित करें</h1>
+                    <h1 class="text-xl font-bold text-gray-800" id="formTitle">Add New Property</h1>
                 </div>
                 <div class="flex items-center space-x-4">
                     <span id="userName" class="text-gray-700"></span>
@@ -125,313 +44,117 @@
         </div>
     </nav>
 
-    <div class="max-w-6xl mx-auto px-4 py-8">
-        <!-- Tabs -->
-        <div class="bg-white rounded-t-lg shadow-sm">
-            <div class="flex border-b">
-                <button class="tab-button active" onclick="switchTab('basic')">
-                    <i class="fas fa-info-circle mr-2"></i>Basic Information
-                </button>
-                <button class="tab-button" onclick="switchTab('location')">
-                    <i class="fas fa-map-marker-alt mr-2"></i>Location
-                </button>
-                <button class="tab-button" onclick="switchTab('images')">
-                    <i class="fas fa-images mr-2"></i>Images
-                </button>
-                <button class="tab-button" onclick="switchTab('details')">
-                    <i class="fas fa-list-alt mr-2"></i>Details
-                </button>
-            </div>
-        </div>
-
+    <div class="max-w-4xl mx-auto px-4 py-8">
         <!-- Property Form -->
-        <form class="bg-white rounded-b-lg shadow-md p-6" id="propertyForm" enctype="multipart/form-data">
-            <!-- Basic Information Tab -->
-            <div id="basic-tab" class="tab-content active">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="md:col-span-2">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Basic Information/कमरे की जानकारी</h3>
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Property Title/मकान नाम *</label>
-                        <input type="text" id="title" name="title" required 
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="e.g., Cozy 2-Bedroom Apartment in Downtown">
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description/विवरण *</label>
-                        <textarea id="description" name="description" rows="4" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Describe your property..."></textarea>
-                    </div>
-
-                    <div>
-                        <label for="propertyType" class="block text-sm font-medium text-gray-700 mb-2">Property Type/संपत्ति प्रकार *</label>
-                        <select id="propertyType" name="propertyType" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">Select Type</option>
-                            <option value="apartment">Apartment</option>
-                            <option value="house">House</option>
-                            <option value="studio">Studio</option>
-                            <option value="condo">Condo</option>
-                            <option value="villa">Villa</option>
-                            <option value="room">Single Room</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="propertyStatus" class="block text-sm font-medium text-gray-700 mb-2">Status/स्थिति *</label>
-                        <select id="propertyStatus" name="propertyStatus" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="available">Available</option>
-                            <option value="rented">Rented</option>
-                            <option value="unavailable">Unavailable</option>
-                        </select>
-                    </div>
+        <form class="bg-white rounded-lg shadow-md p-6" id="propertyForm" enctype="multipart/form-data">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Basic Information -->
+                <div class="md:col-span-2">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Basic Information</h3>
                 </div>
-            </div>
 
-            <!-- Location Tab -->
-            <div id="location-tab" class="tab-content">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="md:col-span-2">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Location/स्थान</h3>
-                    </div>
-
-                    <div>
-                        <label for="state" class="block text-sm font-medium text-gray-700 mb-2">State/राज्य *</label>
-                        <input type="text" id="state" name="state" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="e.g., California">
-                    </div>
-
-                    <div>
-                        <label for="city" class="block text-sm font-medium text-gray-700 mb-2">City/शहर *</label>
-                        <input type="text" id="city" name="city" required
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="e.g., Los Angeles">
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Full Address /पूरा पता*</label>
-                        <div class="flex space-x-2">
-                            <input type="text" id="address" name="address" required
-                                class="flex-1 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                                placeholder="e.g., 123 Main Street, Downtown">
-                            <button type="button" id="detectLocationBtn" 
-                                class="bg-blue-100 text-blue-700 px-4 py-2 rounded-md hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <i class="fas fa-location-arrow"></i> Detect
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Map Section -->
-                    <div class="md:col-span-2">
-                        <div class="flex justify-between items-center mb-2">
-                            <label class="block text-sm font-medium text-gray-700">Property Location on Map</label>
-                            <button type="button" id="useCurrentLocationBtn" 
-                                class="text-sm bg-green-100 text-green-700 px-3 py-1 rounded hover:bg-green-200">
-                                <i class="fas fa-crosshairs mr-1"></i> Use Current Location
-                            </button>
-                        </div>
-                        <div id="propertyMap"></div>
-                        <div class="mt-2 text-sm text-gray-500">
-                            Click on the map to set the exact property location. Coordinates: 
-                            <span id="coordinates">Not set</span>
-                        </div>
-                        <input type="hidden" id="latitude" name="latitude">
-                        <input type="hidden" id="longitude" name="longitude">
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <label for="landmark" class="block text-sm font-medium text-gray-700 mb-2">Nearest Landmark/नजदीकी लैंडमार्क</label>
-                        <input type="text" id="landmark" name="landmark"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="e.g., Near Central Park">
-                    </div>
+                <div class="md:col-span-2">
+                    <label for="title" class="block text-sm font-medium text-gray-700 mb-2">Property Title *</label>
+                    <input type="text" id="title" name="title" required 
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., Cozy 2-Bedroom Apartment in Downtown">
                 </div>
-            </div>
 
-            <!-- Images Tab -->
-            <div id="images-tab" class="tab-content">
-                <div class="grid grid-cols-1 gap-6">
-                    <div>
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Property Images/कमरे का फोटो</h3>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between items-center mb-2">
-                            <label class="block text-sm font-medium text-gray-700">Upload New Images</label>
-                            <button type="button" id="captureLocationBtn" 
-                                class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded hover:bg-blue-200">
-                                <i class="fas fa-camera mr-1"></i> Capture with Location
-                            </button>
-                        </div>
-                        
-                        <!-- File Upload Area -->
-                        <div class="file-upload-area p-6 text-center cursor-pointer" 
-                             id="fileUploadArea"
-                             onclick="document.getElementById('images').click()">
-                            <input type="file" id="images" name="images" multiple accept="image/*" 
-                                   class="hidden" onchange="handleFileSelect(event)">
-                            <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl mb-3"></i>
-                            <p class="text-sm text-gray-600 mb-1">Click to upload images or drag and drop</p>
-                            <p class="text-xs text-gray-500">PNG, JPG, JPEG up to 5MB each</p>
-                        </div>
-
-                        <!-- Selected Files List -->
-                        <div id="selectedFiles" class="mt-4 space-y-2 hidden">
-                            <h4 class="text-sm font-medium text-gray-700">New Images to Upload:</h4>
-                            <div id="fileList" class="space-y-2"></div>
-                        </div>
-
-                        <!-- Image Preview -->
-                        <div id="imagePreview" class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <!-- Existing and new image previews will be shown here -->
-                        </div>
-                    </div>
-
-                    <!-- Existing Images -->
-                    <div id="existingImagesSection" class="hidden">
-                        <h4 class="text-sm font-medium text-gray-700 mb-3">Existing Images:</h4>
-                        <div id="existingImages" class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                            <!-- Existing images will be loaded here -->
-                        </div>
-                    </div>
+                <div class="md:col-span-2">
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description *</label>
+                    <textarea id="description" name="description" rows="4" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Describe your property..."></textarea>
                 </div>
-            </div>
 
-            <!-- Details Tab -->
-            <div id="details-tab" class="tab-content">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="md:col-span-2">
-                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Property Details/संपत्ति विवरण</h3>
+                <!-- Location -->
+                <div>
+                    <label for="state" class="block text-sm font-medium text-gray-700 mb-2">State *</label>
+                    <input type="text" id="state" name="state" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., California">
+                </div>
+
+                <div>
+                    <label for="city" class="block text-sm font-medium text-gray-700 mb-2">City *</label>
+                    <input type="text" id="city" name="city" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., Los Angeles">
+                </div>
+
+                <div class="md:col-span-2">
+                    <label for="address" class="block text-sm font-medium text-gray-700 mb-2">Full Address *</label>
+                    <input type="text" id="address" name="address" required
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., 123 Main Street, Downtown">
+                </div>
+
+                <!-- Property Details -->
+                <div>
+                    <label for="rent" class="block text-sm font-medium text-gray-700 mb-2">Monthly Rent (₹) *</label>
+                    <input type="number" id="rent" name="rent" required min="0"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., 1500">
+                </div>
+
+                <div>
+                    <label for="bedrooms" class="block text-sm font-medium text-gray-700 mb-2">Bedrooms *</label>
+                    <input type="number" id="bedrooms" name="bedrooms" required min="0"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., 2">
+                </div>
+
+                <div>
+                    <label for="bathrooms" class="block text-sm font-medium text-gray-700 mb-2">Bathrooms *</label>
+                    <input type="number" id="bathrooms" name="bathrooms" required min="0" step="0.5"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., 1.5">
+                </div>
+
+                <div class="md:col-span-2">
+                    <label for="amenities" class="block text-sm font-medium text-gray-700 mb-2">Amenities</label>
+                    <input type="text" id="amenities" name="amenities"
+                        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="e.g., WiFi, Parking, Laundry, Gym (comma separated)">
+                </div>
+
+                <!-- Image Upload -->
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Property Images</label>
+                    
+                    <!-- File Upload Area -->
+                    <div class="file-upload-area p-6 text-center cursor-pointer" 
+                         id="fileUploadArea"
+                         onclick="document.getElementById('images').click()">
+                        <input type="file" id="images" name="images" multiple accept="image/*" 
+                               class="hidden" onchange="handleFileSelect(event)">
+                        <i class="fas fa-cloud-upload-alt text-gray-400 text-3xl mb-3"></i>
+                        <p class="text-sm text-gray-600 mb-1">Click to upload images or drag and drop</p>
+                        <p class="text-xs text-gray-500">PNG, JPG, JPEG up to 5MB each</p>
                     </div>
 
-                    <div>
-                        <label for="rent" class="block text-sm font-medium text-gray-700 mb-2">Monthly Rent (₹) *</label>
-                        <input type="number" id="rent" name="rent" required min="0"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="e.g., 1500">
+                    <!-- Selected Files List -->
+                    <div id="selectedFiles" class="mt-4 space-y-2 hidden">
+                        <h4 class="text-sm font-medium text-gray-700">Selected Images:</h4>
+                        <div id="fileList" class="space-y-2"></div>
                     </div>
 
-                    <div>
-                        <label for="deposit" class="block text-sm font-medium text-gray-700 mb-2">Security Deposit (₹)</label>
-                        <input type="number" id="deposit" name="deposit" min="0"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="e.g., 3000">
-                    </div>
-
-                    <div>
-                        <label for="bedrooms" class="block text-sm font-medium text-gray-700 mb-2">Bedrooms/बेडरूम *</label>
-                        <input type="number" id="bedrooms" name="bedrooms" required min="0"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="e.g., 2">
-                    </div>
-
-                    <div>
-                        <label for="bathrooms" class="block text-sm font-medium text-gray-700 mb-2">Bathrooms/बाथरूम *</label>
-                        <input type="number" id="bathrooms" name="bathrooms" required min="0" step="0.5"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="e.g., 1.5">
-                    </div>
-
-                    <div>
-                        <label for="area" class="block text-sm font-medium text-gray-700 mb-2">Area (sq ft)/क्षेत्रफल *</label>
-                        <input type="number" id="area" name="area" required min="0"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="e.g., 1200">
-                    </div>
-
-                    <div>
-                        <label for="floor" class="block text-sm font-medium text-gray-700 mb-2">Floor/मंजिल</label>
-                        <input type="number" id="floor" name="floor" min="0"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="e.g., 2">
-                    </div>
-
-                    <div>
-                        <label for="furnishing" class="block text-sm font-medium text-gray-700 mb-2">Furnishing/सजावट</label>
-                        <select id="furnishing" name="furnishing"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                            <option value="unfurnished">Unfurnished</option>
-                            <option value="semi-furnished">Semi-Furnished</option>
-                            <option value="fully-furnished">Fully Furnished</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label for="availableFrom" class="block text-sm font-medium text-gray-700 mb-2">Available From/उपलब्धता</label>
-                        <input type="date" id="availableFrom" name="availableFrom"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <label for="amenities" class="block text-sm font-medium text-gray-700 mb-2">Amenities/सुविधाएं</label>
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                            <div class="flex items-center">
-                                <input type="checkbox" id="wifi" name="amenities" value="WiFi" class="mr-2">
-                                <label for="wifi">WiFi</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" id="parking" name="amenities" value="Parking" class="mr-2">
-                                <label for="parking">Parking</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" id="ac" name="amenities" value="Air Conditioning" class="mr-2">
-                                <label for="ac">Air Conditioning</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" id="heating" name="amenities" value="Heating" class="mr-2">
-                                <label for="heating">Heating</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" id="laundry" name="amenities" value="Laundry" class="mr-2">
-                                <label for="laundry">Laundry</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" id="gym" name="amenities" value="Gym" class="mr-2">
-                                <label for="gym">Gym</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" id="pool" name="amenities" value="Pool" class="mr-2">
-                                <label for="pool">Pool</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input type="checkbox" id="security" name="amenities" value="Security" class="mr-2">
-                                <label for="security">Security</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="md:col-span-2">
-                        <label for="additionalAmenities" class="block text-sm font-medium text-gray-700 mb-2">Additional Amenities/अतिरिक्त सुविधाएं</label>
-                        <textarea id="additionalAmenities" name="additionalAmenities" rows="2"
-                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                            placeholder="Any other amenities not listed above"></textarea>
+                    <!-- Image Preview -->
+                    <div id="imagePreview" class="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 hidden">
+                        <!-- Image previews will be shown here -->
                     </div>
                 </div>
             </div>
 
             <!-- Form Actions -->
-            <div class="mt-8 flex justify-between items-center">
-                <div>
-                    <button type="button" id="previewBtn" onclick="previewProperty()" 
-                        class="bg-purple-600 text-white px-6 py-2 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <i class="fas fa-eye mr-2"></i>Preview
-                    </button>
-                </div>
-                <div class="flex space-x-4">
-                    <a href="dashboard.html" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-400">
-                        Cancel
-                    </a>
-                    <button type="button" id="submitBtn" onclick="saveProperty()" 
-                        class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        Update Property
-                    </button>
-                </div>
+            <div class="mt-8 flex justify-end space-x-4">
+                <a href="dashboard.html" class="bg-gray-300 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-400">
+                    Cancel
+                </a>
+                <button type="button" id="submitBtn" onclick="saveProperty()" 
+                    class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Save Property
+                </button>
             </div>
         </form>
     </div>
@@ -442,163 +165,25 @@
     <script src="../assets/js/auth.js"></script>
     <script>
         const token = checkAuth();
+        let isEditMode = false;
         let currentPropertyId = null;
         let selectedFiles = [];
-        let map;
-        let marker;
-        let currentLocation = null;
-        let existingImages = [];
 
         // Check if we're in edit mode (URL has ID parameter)
         const urlParams = new URLSearchParams(window.location.search);
         const propertyId = urlParams.get('id');
         
         if (propertyId) {
+            isEditMode = true;
             currentPropertyId = propertyId;
+            document.getElementById('formTitle').textContent = 'Edit Property';
+            document.getElementById('submitBtn').textContent = 'Update Property';
             loadPropertyData(propertyId);
-        } else {
-            showNotification('No property ID provided', 'error');
-            setTimeout(() => {
-                window.location.href = 'dashboard.html';
-            }, 2000);
         }
 
         // Display user name
         const user = JSON.parse(localStorage.getItem('user') || '{}');
         document.getElementById('userName').textContent = user.name || 'User';
-
-        // Initialize map
-        function initMap() {
-            // Default to a central location (India)
-            const defaultLocation = [20.5937, 78.9629];
-            
-            map = L.map('propertyMap').setView(defaultLocation, 5);
-            
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
-            
-            // Add click event to set marker
-            map.on('click', function(e) {
-                setMarker(e.latlng.lat, e.latlng.lng);
-            });
-        }
-        
-        // Set marker on map
-        function setMarker(lat, lng) {
-            if (marker) {
-                map.removeLayer(marker);
-            }
-            
-            marker = L.marker([lat, lng]).addTo(map);
-            
-            // Update coordinates display
-            document.getElementById('coordinates').textContent = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-            document.getElementById('latitude').value = lat;
-            document.getElementById('longitude').value = lng;
-            
-            // Reverse geocode to get address
-            reverseGeocode(lat, lng);
-        }
-        
-        // Get current location
-        function getCurrentLocation() {
-            if (navigator.geolocation) {
-                document.getElementById('useCurrentLocationBtn').innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Detecting...';
-                
-                navigator.geolocation.getCurrentPosition(
-                    function(position) {
-                        const lat = position.coords.latitude;
-                        const lng = position.coords.longitude;
-                        
-                        currentLocation = { lat, lng };
-                        
-                        // Center map on current location
-                        map.setView([lat, lng], 15);
-                        
-                        // Set marker
-                        setMarker(lat, lng);
-                        
-                        // Update address fields
-                        reverseGeocode(lat, lng);
-                        
-                        document.getElementById('useCurrentLocationBtn').innerHTML = '<i class="fas fa-crosshairs mr-1"></i>Use Current Location';
-                    },
-                    function(error) {
-                        console.error('Error getting location:', error);
-                        showNotification('Could not get your current location', 'error');
-                        document.getElementById('useCurrentLocationBtn').innerHTML = '<i class="fas fa-crosshairs mr-1"></i>Use Current Location';
-                    }
-                );
-            } else {
-                showNotification('Geolocation is not supported by this browser', 'error');
-            }
-        }
-        
-        // Reverse geocode coordinates to address
-        function reverseGeocode(lat, lng) {
-            fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data && data.address) {
-                        const address = data.address;
-                        
-                        // Update form fields
-                        if (address.road || address.house_number) {
-                            document.getElementById('address').value = 
-                                `${address.house_number || ''} ${address.road || ''}`.trim();
-                        }
-                        
-                        if (address.city || address.town || address.village) {
-                            document.getElementById('city').value = 
-                                address.city || address.town || address.village || '';
-                        }
-                        
-                        if (address.state) {
-                            document.getElementById('state').value = address.state;
-                        }
-                    }
-                })
-                .catch(error => {
-                    console.error('Error reverse geocoding:', error);
-                });
-        }
-        
-        // Initialize map when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            initMap();
-            
-            // Add event listeners for location buttons
-            document.getElementById('useCurrentLocationBtn').addEventListener('click', getCurrentLocation);
-            
-            document.getElementById('detectLocationBtn').addEventListener('click', function() {
-                getCurrentLocation();
-            });
-            
-            // Add camera functionality for location capture
-            document.getElementById('captureLocationBtn').addEventListener('click', function() {
-                captureImageWithLocation();
-            });
-        });
-
-        // Tab switching functionality
-        function switchTab(tabName) {
-            // Hide all tabs
-            document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            // Remove active class from all buttons
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.classList.remove('active');
-            });
-            
-            // Show selected tab
-            document.getElementById(`${tabName}-tab`).classList.add('active');
-            
-            // Add active class to clicked button
-            event.target.classList.add('active');
-        }
 
         // Drag and drop functionality
         const fileUploadArea = document.getElementById('fileUploadArea');
@@ -627,7 +212,7 @@
 
         function handleFiles(files) {
             if (files.length > 0) {
-                selectedFiles = [...selectedFiles, ...Array.from(files)];
+                selectedFiles = Array.from(files);
                 updateFileList();
                 previewImages();
             }
@@ -674,221 +259,35 @@
             
             if (selectedFiles.length > 0) {
                 preview.innerHTML = '';
+                preview.classList.remove('hidden');
                 
                 selectedFiles.forEach((file, index) => {
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         const imgContainer = document.createElement('div');
                         imgContainer.className = 'relative';
-                        
-                        // Check if image has location data
-                        const hasLocation = file.locationData ? true : false;
-                        
                         imgContainer.innerHTML = `
                             <img src="${e.target.result}" 
                                  alt="Preview ${index + 1}" 
                                  class="w-full h-32 object-cover rounded-lg">
-                            ${hasLocation ? 
-                                `<div class="geotag-indicator">
-                                    <i class="fas fa-map-marker-alt mr-1"></i>Location
-                                </div>` : 
-                                ''
-                            }
                             <button type="button" 
                                     onclick="removeFile(${index})" 
                                     class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
                                 <i class="fas fa-times"></i>
                             </button>
-                            ${hasLocation ? 
-                                `<div class="location-tag">${file.locationData.address || 'Location captured'}</div>` : 
-                                ''
-                            }
                         `;
                         preview.appendChild(imgContainer);
                     };
                     reader.readAsDataURL(file);
                 });
-            } else if (existingImages.length === 0) {
-                preview.innerHTML = `
-                    <div class="col-span-4 text-center py-8 text-gray-400">
-                        <i class="fas fa-images text-3xl mb-2"></i>
-                        <p>No images uploaded yet</p>
-                    </div>
-                `;
-            }
-        }
-
-        // Display existing images
-        function displayExistingImages(images) {
-            const existingImagesContainer = document.getElementById('existingImages');
-            const existingImagesSection = document.getElementById('existingImagesSection');
-            
-            if (images && images.length > 0) {
-                existingImagesSection.classList.remove('hidden');
-                existingImagesContainer.innerHTML = '';
-                
-                images.forEach((image, index) => {
-                    const imgContainer = document.createElement('div');
-                    imgContainer.className = 'relative existing-image';
-                    imgContainer.innerHTML = `
-                        <img src="${getImageUrl(image)}" 
-                             alt="Existing image ${index + 1}" 
-                             class="w-full h-32 object-cover rounded-lg">
-                        <div class="existing-image-badge">
-                            Existing
-                        </div>
-                        <button type="button" 
-                                onclick="removeExistingImage('${image._id}')" 
-                                class="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    `;
-                    existingImagesContainer.appendChild(imgContainer);
-                });
             } else {
-                existingImagesSection.classList.add('hidden');
+                preview.classList.add('hidden');
             }
-        }
-
-        function getImageUrl(image) {
-            if (!image) return '';
-            
-            // If it's already a full URL
-            if (image.path && image.path.startsWith('http')) {
-                return image.path;
-            }
-            if (image.url && image.url.startsWith('http')) {
-                return image.url;
-            }
-            
-            // If it's a filename
-            if (image.filename) {
-                return `https://backend-room-2.onrender.com/uploads/${image.filename}`;
-            }
-            
-            // Fallback to path
-            if (image.path) {
-                return `https://backend-room-2.onrender.com/${image.path}`;
-            }
-            
-            return '';
-        }
-
-        // Remove existing image
-        function removeExistingImage(imageId) {
-            if (confirm('Are you sure you want to remove this image?')) {
-                // In a real app, you would send a request to delete the image
-                // For now, we'll just remove it from the UI
-                existingImages = existingImages.filter(img => img._id !== imageId);
-                displayExistingImages(existingImages);
-                showNotification('Image removed successfully', 'success');
-            }
-        }
-
-        // Capture image with location
-        function captureImageWithLocation() {
-            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                showNotification('Camera access is not supported by your browser', 'error');
-                return;
-            }
-            
-            // Get current location first
-            if (!currentLocation) {
-                showNotification('Please enable location services first', 'error');
-                return;
-            }
-            
-            // Create a camera capture interface
-            const cameraModal = document.createElement('div');
-            cameraModal.className = 'fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center';
-            cameraModal.innerHTML = `
-                <div class="bg-white rounded-lg p-4 max-w-md w-full">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-semibold">Capture Property Photo</h3>
-                        <button id="closeCamera" class="text-gray-500 hover:text-gray-700">
-                            <i class="fas fa-times"></i>
-                        </button>
-                    </div>
-                    <video id="cameraPreview" class="w-full h-64 bg-gray-200 rounded" autoplay></video>
-                    <div class="mt-4 flex justify-center">
-                        <button id="capturePhoto" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-                            <i class="fas fa-camera mr-2"></i>Capture Photo
-                        </button>
-                    </div>
-                    <div class="mt-2 text-sm text-gray-500 text-center">
-                        Location: ${document.getElementById('coordinates').textContent}
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(cameraModal);
-            
-            // Set up camera
-            const video = document.getElementById('cameraPreview');
-            const closeBtn = document.getElementById('closeCamera');
-            const captureBtn = document.getElementById('capturePhoto');
-            
-            navigator.mediaDevices.getUserMedia({ video: true })
-                .then(function(stream) {
-                    video.srcObject = stream;
-                    
-                    // Capture photo
-                    captureBtn.addEventListener('click', function() {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = video.videoWidth;
-                        canvas.height = video.videoHeight;
-                        const context = canvas.getContext('2d');
-                        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-                        
-                        // Convert to blob
-                        canvas.toBlob(function(blob) {
-                            // Stop camera stream
-                            stream.getTracks().forEach(track => track.stop());
-                            
-                            // Create file with location data
-                            const file = new File([blob], `property-photo-${Date.now()}.jpg`, {
-                                type: 'image/jpeg'
-                            });
-                            
-                            // Add location metadata
-                            file.locationData = {
-                                lat: currentLocation.lat,
-                                lng: currentLocation.lng,
-                                address: document.getElementById('address').value || 
-                                         `${document.getElementById('city').value}, ${document.getElementById('state').value}`
-                            };
-                            
-                            // Add to selected files
-                            selectedFiles.push(file);
-                            updateFileList();
-                            previewImages();
-                            
-                            // Close modal
-                            document.body.removeChild(cameraModal);
-                            
-                            showNotification('Photo captured with location data', 'success');
-                        }, 'image/jpeg', 0.9);
-                    });
-                })
-                .catch(function(error) {
-                    console.error('Error accessing camera:', error);
-                    showNotification('Could not access camera', 'error');
-                    document.body.removeChild(cameraModal);
-                });
-            
-            // Close modal
-            closeBtn.addEventListener('click', function() {
-                // Stop camera stream
-                if (video.srcObject) {
-                    video.srcObject.getTracks().forEach(track => track.stop());
-                }
-                document.body.removeChild(cameraModal);
-            });
         }
 
         async function loadPropertyData(id) {
             try {
-                const response = await fetch(`https://backend-room-2.onrender.com/api/properties/${id}`, {
+                const response = await fetch(`http://localhost:5000/api/properties/${id}`, {
                     headers: getAuthHeaders()
                 });
                 
@@ -906,77 +305,32 @@
                     document.getElementById('rent').value = property.rent;
                     document.getElementById('bedrooms').value = property.bedrooms;
                     document.getElementById('bathrooms').value = property.bathrooms;
-                    document.getElementById('area').value = property.area || '';
-                    document.getElementById('floor').value = property.floor || '';
-                    document.getElementById('landmark').value = property.landmark || '';
-                    document.getElementById('deposit').value = property.deposit || '';
+                    document.getElementById('amenities').value = property.amenities?.join(', ') || '';
                     
-                    // Set property type
-                    if (property.propertyType) {
-                        document.getElementById('propertyType').value = property.propertyType;
-                    }
-                    
-                    // Set property status
-                    if (property.status) {
-                        document.getElementById('propertyStatus').value = property.status;
-                    }
-                    
-                    // Set furnishing
-                    if (property.furnishing) {
-                        document.getElementById('furnishing').value = property.furnishing;
-                    }
-                    
-                    // Set available from date
-                    if (property.availableFrom) {
-                        document.getElementById('availableFrom').value = property.availableFrom.split('T')[0];
-                    }
-                    
-                    // Set amenities checkboxes
-                    if (property.amenities && Array.isArray(property.amenities)) {
-                        property.amenities.forEach(amenity => {
-                            const checkbox = document.querySelector(`input[value="${amenity}"]`);
-                            if (checkbox) {
-                                checkbox.checked = true;
-                            }
+                    // Show existing images
+                    if (property.images && property.images.length > 0) {
+                        const preview = document.getElementById('imagePreview');
+                        preview.innerHTML = '';
+                        preview.classList.remove('hidden');
+                        
+                        property.images.forEach((image, index) => {
+                            const imgContainer = document.createElement('div');
+                            imgContainer.className = 'relative';
+                            imgContainer.innerHTML = `
+                                <img src="http://localhost:5000/${image.path}" 
+                                     alt="Existing image ${index + 1}" 
+                                     class="w-full h-32 object-cover rounded-lg">
+                                <span class="absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
+                                    Existing
+                                </span>
+                            `;
+                            preview.appendChild(imgContainer);
                         });
                     }
-                    
-                    // Set additional amenities
-                    if (property.additionalAmenities) {
-                        document.getElementById('additionalAmenities').value = property.additionalAmenities;
-                    }
-                    
-                    // Set map location if coordinates exist
-                    if (property.latitude && property.longitude) {
-                        const lat = parseFloat(property.latitude);
-                        const lng = parseFloat(property.longitude);
-                        
-                        // Center map on property location
-                        map.setView([lat, lng], 15);
-                        
-                        // Set marker
-                        setMarker(lat, lng);
-                    }
-                    
-                    // Store and display existing images
-                    if (property.images && property.images.length > 0) {
-                        existingImages = property.images;
-                        displayExistingImages(existingImages);
-                    }
-                    
-                    // Show existing images in preview section
-                    previewImages();
                 }
             } catch (error) {
                 showNotification('Error loading property data', 'error');
             }
-        }
-
-        // Preview property
-        function previewProperty() {
-            // In a real app, you would open a preview modal or page
-            // For now, we'll just show a notification
-            showNotification('Preview feature coming soon!', 'info');
         }
 
         async function saveProperty() {
@@ -991,15 +345,14 @@
             const rent = document.getElementById('rent').value;
             const bedrooms = document.getElementById('bedrooms').value;
             const bathrooms = document.getElementById('bathrooms').value;
-            const area = document.getElementById('area').value;
             
-            if (!title || !description || !state || !city || !address || !rent || !bedrooms || !bathrooms || !area) {
+            if (!title || !description || !state || !city || !address || !rent || !bedrooms || !bathrooms) {
                 showNotification('Please fill all required fields', 'error');
                 return;
             }
             
             // Show loading state
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Updating...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Saving...';
             submitBtn.disabled = true;
             
             try {
@@ -1014,54 +367,24 @@
                 formData.append('rent', rent);
                 formData.append('bedrooms', bedrooms);
                 formData.append('bathrooms', bathrooms);
-                formData.append('area', area);
-                formData.append('propertyType', document.getElementById('propertyType').value);
-                formData.append('status', document.getElementById('propertyStatus').value);
-                
-                // Add optional fields
-                if (document.getElementById('floor').value) {
-                    formData.append('floor', document.getElementById('floor').value);
-                }
-                if (document.getElementById('landmark').value) {
-                    formData.append('landmark', document.getElementById('landmark').value);
-                }
-                if (document.getElementById('deposit').value) {
-                    formData.append('deposit', document.getElementById('deposit').value);
-                }
-                if (document.getElementById('furnishing').value) {
-                    formData.append('furnishing', document.getElementById('furnishing').value);
-                }
-                if (document.getElementById('availableFrom').value) {
-                    formData.append('availableFrom', document.getElementById('availableFrom').value);
-                }
-                if (document.getElementById('additionalAmenities').value) {
-                    formData.append('additionalAmenities', document.getElementById('additionalAmenities').value);
-                }
-                
-                // Add amenities
-                const amenities = [];
-                document.querySelectorAll('input[name="amenities"]:checked').forEach(checkbox => {
-                    amenities.push(checkbox.value);
-                });
-                formData.append('amenities', amenities.join(','));
-                
-                // Add location if set
-                const latitude = document.getElementById('latitude').value;
-                const longitude = document.getElementById('longitude').value;
-                if (latitude && longitude) {
-                    formData.append('latitude', latitude);
-                    formData.append('longitude', longitude);
-                }
+                formData.append('amenities', document.getElementById('amenities').value);
                 
                 // Add images
                 selectedFiles.forEach(file => {
                     formData.append('images', file);
                 });
                 
-                const response = await fetch(`https://backend-room-2.onrender.com/api/properties/${currentPropertyId}`, {
-                    method: 'PUT',
+                const url = isEditMode 
+                    ? `http://localhost:5000/api/properties/${currentPropertyId}`
+                    : 'http://localhost:5000/api/properties';
+                
+                const method = isEditMode ? 'PUT' : 'POST';
+                
+                const response = await fetch(url, {
+                    method: method,
                     headers: {
                         'Authorization': `Bearer ${token}`
+                        // Don't set Content-Type for FormData - browser will set it automatically with boundary
                     },
                     body: formData
                 });
@@ -1069,7 +392,10 @@
                 const data = await response.json();
                 
                 if (data.success) {
-                    showNotification('Property updated successfully!', 'success');
+                    showNotification(
+                        `Property ${isEditMode ? 'updated' : 'created'} successfully!`, 
+                        'success'
+                    );
                     
                     setTimeout(() => {
                         window.location.href = 'dashboard.html';
@@ -1078,9 +404,9 @@
                     throw new Error(data.message);
                 }
             } catch (error) {
-                console.error('Error updating property:', error);
-                showNotification(error.message || 'Error updating property', 'error');
-                submitBtn.innerHTML = 'Update Property';
+                console.error('Error saving property:', error);
+                showNotification(error.message || 'Error saving property', 'error');
+                submitBtn.innerHTML = isEditMode ? 'Update Property' : 'Save Property';
                 submitBtn.disabled = false;
             }
         }
@@ -1088,9 +414,7 @@
         function showNotification(message, type) {
             const notification = document.getElementById('notification');
             notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
-                type === 'success' ? 'bg-green-500' : 
-                type === 'error' ? 'bg-red-500' : 
-                'bg-blue-500'
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
             } text-white`;
             notification.textContent = message;
             notification.classList.remove('hidden');
